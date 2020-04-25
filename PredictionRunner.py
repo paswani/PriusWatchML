@@ -34,43 +34,41 @@ class PriusPredictionRunner(object):
 		pass
 
 	def predict(self, image_meta):
-
 		start = time.time()
-		#try:
+		try:
+			for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
+				# print(eachObject["name"], " : ", str(eachObject["percentage_probability"]), " : ",
+				#    str(eachObject["box_points"]))
+				prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
+				                       image_path=eachObjectPath)
 
-		for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
-			# print(eachObject["name"], " : ", str(eachObject["percentage_probability"]), " : ",
-			#    str(eachObject["box_points"]))
-			prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
-			                       image_path=eachObjectPath)
+				if "person" in eachObject or "prius" in eachObject or "car" in eachObject or "vehicle" in eachObject:
+					predictions, probabilities = prius.predict_vehicle(prediction_meta)
+					found_prius = False
+					prius_prob = ''
+					for eachPrediction, eachProbability in zip(predictions, probabilities):
+						if "prius" in eachPrediction and int(eachProbability) > 50:
+							img = PriusImage.from_path(eachObjectPath)
+							hasPCA = img.has_pca_match()
+							print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
+								eachProbability) + " PCA: " + str(hasPCA))
+							found_prius = True
+							prius_prob = eachProbability
+						print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
+					try:
+						if found_prius:
+							shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
+							            args['output'] + 'detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
 
-			predictions, probabilities = prius.predict_vehicle(prediction_meta)
-			found_prius = False
-			prius_prob = ''
-			for eachPrediction, eachProbability in zip(predictions, probabilities):
-				if "prius" in eachPrediction and int(eachProbability) > 50:
-					img = PriusImage.from_path(eachObjectPath)
-					hasPCA = img.has_pca_match()
-					print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
-						eachProbability) + " PCA: " + str(hasPCA))
-					found_prius = True
-					prius_prob = eachProbability
-				print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
-			try:
-				if found_prius:
-					shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
-					            args['output'] + '/detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
+						shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
+						            args['output'] + 'processed/' + image_meta['image_name'])
 
-				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-				            args['output'] + '/processed/' + image_meta['image_name'])
-
-			except Exception as e:
-				print("Exception while predicting: " + str(e))
-
+					except Exception as e:
+						print("Exception while predicting: " + str(e))
+		except Exception as e:
+			print("Exception while predicting: " + str(e))
 		end = time.time()
 		print("Prediction Time: " + str(end - start))
-		#except Exception as e:
-			#print("Exception while predicting: " + str(e))
 
 	def predict_threading(self):
 		while True:
@@ -127,9 +125,12 @@ def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	for file in glob.iglob(args["images"], recursive=True):
-		if file.endswith("jpg"):
-			runner.predict(dict(image_path=args["images"], image_name=file))
+	for file in glob.iglob(args["images"] + "/**/*.jpg", recursive=True):
+		if "processed" not in file and "detection" not in file:
+			dir_len = len(os.path.dirname(file)) + 1
+			img_len = len(file)
+
+			runner.predict(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
 
 
 if __name__ == '__main__':

@@ -33,7 +33,7 @@ class PriusPredictor(object):
 		now = time.localtime()
 		self.frame_folder = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday)
 		self.image_path = image_path
-		self.output_path = image_path + "/detection/" + self.frame_folder + "/"
+		self.output_path = output_path + "detection/" + self.frame_folder + "/"
 
 		if os.path.exists(image_path) is False:
 			os.mkdir(image_path)
@@ -77,14 +77,16 @@ class PriusPredictor(object):
 	def detect_vehicle(self, meta_data):
 		try:
 			print("Detecting vehicle for " + meta_data['image_name'])
-			image_loc = os.path.join(meta_data['image_path'], meta_data['image_name'])
-			detections, objects_path = self.detector.detectObjectsFromImage(input_image=image_loc,
-			                                                                extract_detected_objects=True,
-			                                                                thread_safe=True,
-			                                                                output_image_path=os.path.join(
-				                                                                self.output_path,
-				                                                                meta_data['image_name']),
-			                                                                minimum_percentage_probability=50)
+
+			image = meta_data["image_path"] + meta_data['image_name']
+			output_image = self.output_path + meta_data['image_name']
+			if os.path.exists(image) is not True:
+				print("File doesnt exist. File: " + "/frames/" + image)
+			detections, objects_path = self.detector.detectObjectsFromImage(input_image=image,
+			                                                           extract_detected_objects=True,
+			                                                           output_image_path=output_image,
+			                                                           minimum_percentage_probability=50)
+
 			return zip(detections, objects_path)
 		except Exception as e:
-			print("While detecting vehicle: " + e)
+			print("While detecting vehicle: " + str(e))
