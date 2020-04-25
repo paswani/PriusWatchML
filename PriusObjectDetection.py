@@ -14,8 +14,8 @@ from imageai.Detection import ObjectDetection
 from imageai.Prediction.Custom import CustomImagePrediction
 
 
-class PriusPredictor(object, image_path, model_path):
-	def __init__(self):
+class PriusPredictor(object):
+	def __init__(self, image_path, model_path):
 		self.avgColor = []
 		self.pcaColors = []
 
