@@ -14,27 +14,26 @@ from imageai.Detection import ObjectDetection
 from imageai.Prediction.Custom import CustomImagePrediction
 
 
-class PriusPredictor(object):
+class PriusPredictor(object, image_path, model_path):
 	def __init__(self):
 		self.avgColor = []
 		self.pcaColors = []
 
-		self.weights_path = "yolo.h5"
 		self.detector = ObjectDetection()
 		self.detector.setModelTypeAsYOLOv3()
-		self.detector.setModelPath("yolo.h5")
+		self.detector.setModelPath(model_path + "yolo.h5")
 		self.detector.loadModel()
 
 		self.prediction = CustomImagePrediction()
 		self.prediction.setModelTypeAsResNet()
-		self.prediction.setModelPath("model_ex-027_acc-0.992647.h5")
-		self.prediction.setJsonPath("model_class.json")
+		self.prediction.setModelPath(model_path + "model_ex-027_acc-0.992647.h5")
+		self.prediction.setJsonPath(model_path + "model_class.json")
 		self.prediction.loadModel(num_objects=2)
 
 		now = time.localtime()
 		self.frame_folder = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday)
-		self.image_path = "/frames/"
-		self.output_path = "./frames/detection/" + self.frame_folder + "/"
+		self.image_path = image_path
+		self.output_path = image_path + "/detection/" + self.frame_folder + "/"
 
 		self.create_output_folder()
 
