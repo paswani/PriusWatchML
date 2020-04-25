@@ -44,7 +44,7 @@ def watch_camera():
 				now.tm_hour) + "-" + str(now.tm_min) + "/"
 
 			frame_file = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday) + "_" + str(
-				now.tm_hour) + "-" + str(now.tm_min) + "_" + str(cam['id']) + ".jpg"
+				now.tm_hour) + "-" + str(now.tm_min) + "_" + str(now.tm_sec) + "_" + str(cam['id']) + ".jpg"
 
 			frame_dir = args["path"] + frame_folder
 			if os.path.exists(frame_dir) is False:
