@@ -9,7 +9,7 @@ class PriusPalette:
         #8db1b7 <-> #50757f -- rgb(50,87,77) <-> rgb(181,227,223)
         self.dullBlueGrey = [([77,87,50], [223,217,181])]
         #+++Required Palettes: 353  Average Color: 17  PCA Colors: 70  Perfect Match: 4  Total: 30
-        self.requiredShades.append(self.dullBlueGrey) 
+        #self.requiredShades.append(self.dullBlueGrey)
 
         #d3e8eb <-> #84bac8 -- rgb(133,186,200) <-> rgb(222,232,235)
         self.lightBlueShades = [([200,186,133], [235,232,222])]
@@ -75,4 +75,4 @@ class PriusPalette:
                 #print("Shade: " + str(shade) + "  Palette Range: " + str(boundary) + "  Match? " + str(aboveLower and aboveUpper))
                 outputList.append(aboveLower and aboveUpper)
                 
-        return any(outputList)
+        return all(outputList)

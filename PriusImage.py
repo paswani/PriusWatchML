@@ -154,7 +154,7 @@ class PriusImage(object):
 		image = self.image.reshape((height * width, 3))
 
 		# we'll pick the 5 most common colors
-		num_clusters = 1
+		num_clusters = 2
 		clusters = KMeans(n_clusters=num_clusters)
 		clusters.fit(image)
 
