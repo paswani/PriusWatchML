@@ -71,13 +71,13 @@ class PriusPredictionRunner(object):
 
 	def predict_threading(self):
 		while True:
-			try:
-				image = q.get()
-				if image is None:
-					break
-				self.predict(image)
-			except Exception as e:
-				print(e)
+		#try:
+			image = q.get()
+			if image is None:
+				break
+			self.predict(image)
+	#	except Exception as e:
+		#	print(e)
 			q.task_done()
 
 	def start_pool(self, count):
@@ -137,5 +137,5 @@ if __name__ == '__main__':
 		start_predicting_pool()
 	elif args['threading'] == 'thread':
 		start_predicting_threads()
-	elif args['single'] == 'single':
+	elif args['threading'] == 'single':
 		start_predicting_single()
