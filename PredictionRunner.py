@@ -146,7 +146,7 @@ def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	for file in get_files(args['image']):
+	for file in get_files(args['images']):
 		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
 			dir_len = len(os.path.dirname(file)) + 1
 			img_len = len(file)
