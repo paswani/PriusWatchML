@@ -26,6 +26,8 @@ ap.add_argument("-t", "--timer", required=False,
                 help="path to input image")
 ap.add_argument("-c", "--cams", default='min_cams2.json',
                 help="base path to YOLO directory")
+ap.add_argument("-p", "--path")
+
 
 args = vars(ap.parse_args())
 
@@ -44,7 +46,7 @@ def watch_camera():
 			frame_file = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday) + "_" + str(
 				now.tm_hour) + "-" + str(now.tm_min) + "_" + str(cam['id']) + ".jpg"
 
-			frame_dir = pathFolder + frame_folder
+			frame_dir = args["path"] + frame_folder
 			if os.path.exists(frame_dir) is False:
 				os.mkdir(frame_dir)
 			path = frame_dir + frame_file
@@ -94,7 +96,7 @@ if __name__ == '__main__':
 	for cam in cams:
 		q.put(cam)
 
-	pathFolder = "./frames/"
+	pathFolder = args['path']
 
 	tl.start()
 	start_watching()
