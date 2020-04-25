@@ -17,7 +17,7 @@ ap.add_argument("-m", "--model-path", required=False,
 args = vars(ap.parse_args())
 
 images = []
-prius = PriusPredictor(args['model_path'])
+prius = PriusPredictor(args['image-path'], args['model-path'])
 
 
 class PriusPredictionRunner(object):
@@ -50,10 +50,10 @@ class PriusPredictionRunner(object):
 			try:
 				if found_prius:
 					shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
-					            args['image_path'] + 'match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
+					            args['image-path'] + 'match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
 
 				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-				            args['image_path'] + '/processed/' + image_meta['image_name'])
+				            args['image-path'] + '/processed/' + image_meta['image_name'])
 
 			except Exception as e:
 				pass
@@ -70,10 +70,10 @@ def start_predicting():
 	print("Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	arr = os.listdir(args["image_path"])
+	arr = os.listdir(args["image-path"])
 	for file in arr:
 		if file.endswith("jpg"):
-			images.append(dict(image_path=args["image_path"], image_name=file))
+			images.append(dict(image_path=args["image-path"], image_name=file))
 
 	print("Images populated.  Images: " + str(len(images)))
 	runner.start_pool(8)
