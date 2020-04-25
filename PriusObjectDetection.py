@@ -35,6 +35,12 @@ class PriusPredictor(object):
 		self.image_path = image_path
 		self.output_path = image_path + "/detection/" + self.frame_folder + "/"
 
+		if os.path.exists(os.path.join(image_path, 'detection')) is False:
+			os.mkdir(os.path.join(image_path, 'detection'))
+
+		if os.path.exists(os.path.join(image_path, 'processed')) is False:
+			os.mkdir(os.path.join(image_path, 'processed'))
+
 		self.create_output_folder()
 
 	def create_output_folder(self):
