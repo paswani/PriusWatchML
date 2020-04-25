@@ -53,19 +53,10 @@ class PriusPredictor(object):
 		if os.path.exists(self.output_path) is False:
 			os.mkdir(self.output_path)
 
-	def write_prediction_results(self):
-		if self.hasPcaMatch is True:
-			cv2.imwrite("pca_" + file, image)
-			self.pcaPredictedCount = pcaPredictedCount + 1
-
-		if self.hasPerfectMatch is True:
-			cv2.imwrite("perfect_" + file, image)
-			self.perfectMatchCount = perfectMatchCount + 1
-
 	def predict_vehicle(self, prediction_meta):
 		detected_img = prediction_meta['image_path']
-		if self.detect_pca(detected_img):
-			print("PCA match for: " + detected_img)
+		#if self.detect_pca(detected_img):
+		#	print("PCA match for: " + detected_img)
 
 		return self.prediction.predictImage(detected_img, result_count=2)
 
