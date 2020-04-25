@@ -1,6 +1,7 @@
 import argparse
 import multiprocessing
 import os
+import glob
 import shutil
 import time
 from multiprocessing import Pool
@@ -102,8 +103,7 @@ def start_predicting_pool():
 	print("Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	arr = os.listdir(args["images"])
-	for file in arr:
+	for file in glob.iglob(args["images"], recursive=True):
 		if file.endswith("jpg"):
 			images.append(dict(image_path=args["images"], image_name=file))
 
@@ -114,20 +114,18 @@ def start_predicting_threads():
 	print("Multi-Threaded - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	arr = os.listdir(args["images"])
-	for file in arr:
+	for file in glob.iglob(args["images"], recursive=True):
 		if file.endswith("jpg"):
 			q.put(dict(image_path=args["images"], image_name=file))
 
-	print("Images populated.  Images: " + str(len(images)))
+	print("Images populated.")
 	runner.start_threads(multiprocessing.cpu_count())
 
 def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	arr = os.listdir(args["images"])
-	for file in arr:
+	for file in glob.iglob(args["images"], recursive=True):
 		if file.endswith("jpg"):
 			runner.predict(dict(image_path=args["images"], image_name=file))
 
