@@ -66,8 +66,8 @@ class PriusPredictionRunner(object):
 
 			end = time.time()
 			print("Prediction Time: " + str(end - start))
-		except:
-			pass
+		except Exception as e:
+			print("Exception while predicting: " + e)
 
 	def predict_threading(self):
 		while True:
