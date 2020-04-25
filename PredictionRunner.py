@@ -1,14 +1,15 @@
 import argparse
+import glob
 import multiprocessing
 import os
-import glob
+import queue
 import shutil
+import threading
 import time
 from multiprocessing import Pool
-import threading
-import queue
-from PriusImage import PriusImage
+
 import cv2
+from PriusImage import PriusImage
 from PriusObjectDetection import PriusPredictor
 
 ap = argparse.ArgumentParser()
@@ -27,6 +28,17 @@ q = queue.Queue()
 images = []
 threads = []
 prius = PriusPredictor(args['images'], args['models'], args['output'])
+
+import os
+def get_files(folder):
+    items = []
+    arr = os.listdir(folder)
+    for file in arr:
+        if os.path.isdir(os.path.join(folder,file)):
+            return get_files(os.path.join(folder,file))
+        items.append(os.path.join(folder,file))
+    return items
+
 
 class PriusPredictionRunner(object):
 
@@ -57,7 +69,8 @@ class PriusPredictionRunner(object):
 					try:
 						if found_prius:
 							shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
-							            args['output'] + 'detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
+							            args['output'] + 'detection/match_' + str(prius_prob) + '_' + str(
+								            hasPCA) + "_" + image_meta['image_name'])
 
 						shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
 						            args['output'] + 'processed/' + image_meta['image_name'])
@@ -71,13 +84,13 @@ class PriusPredictionRunner(object):
 
 	def predict_threading(self):
 		while True:
-		#try:
+			# try:
 			image = q.get()
 			if image is None:
 				break
 			self.predict(image)
-	#	except Exception as e:
-		#	print(e)
+			#	except Exception as e:
+			#	print(e)
 			q.task_done()
 
 	def start_pool(self, count):
@@ -96,41 +109,48 @@ class PriusPredictionRunner(object):
 			t.start()
 			q.put(None)
 
+
 runner = PriusPredictionRunner()
+
 
 def start_predicting_pool():
 	print("Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	for file in glob.iglob(args["images"], recursive=True):
-		if file.endswith("jpg"):
-			images.append(dict(image_path=args["images"], image_name=file))
+	for file in get_files(args['image']):
+		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
+			dir_len = len(os.path.dirname(file)) + 1
+			img_len = len(file)
+
+			images.append(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
 
 	print("Images populated.  Images: " + str(len(images)))
 	runner.start_pool(multiprocessing.cpu_count())
+
 
 def start_predicting_threads():
 	print("Multi-Threaded - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	for file in glob.iglob(args["images"], recursive=True):
-		if file.endswith("jpg"):
-			q.put(dict(image_path=args["images"], image_name=file))
+	for file in get_files(args['image']):
+		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
+			dir_len = len(os.path.dirname(file)) + 1
+			img_len = len(file)
+			q.put(dict(image_path=args["images"],image_name=file[dir_len:img_len]))
 
 	print("Images populated.")
 	runner.start_threads(multiprocessing.cpu_count())
+
 
 def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	for file in glob.iglob(args["images"] + "/**/*.jpg", recursive=True):
-		if "processed" not in file and "detection" not in file:
+	for file in get_files(args['image']):
+		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
 			dir_len = len(os.path.dirname(file)) + 1
 			img_len = len(file)
-
 			runner.predict(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
-
 
 if __name__ == '__main__':
 	if args['threading'] == 'pool':
