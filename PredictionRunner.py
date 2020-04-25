@@ -33,41 +33,41 @@ class PriusPredictionRunner(object):
 	def predict(self, image_meta):
 
 		start = time.time()
-		try:
+		#try:
 
-			for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
-				# print(eachObject["name"], " : ", str(eachObject["percentage_probability"]), " : ",
-				#    str(eachObject["box_points"]))
-				prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
-				                       image_path=eachObjectPath)
+		for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
+			# print(eachObject["name"], " : ", str(eachObject["percentage_probability"]), " : ",
+			#    str(eachObject["box_points"]))
+			prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
+			                       image_path=eachObjectPath)
 
-				predictions, probabilities = prius.predict_vehicle(prediction_meta)
-				found_prius = False
-				prius_prob = ''
-				for eachPrediction, eachProbability in zip(predictions, probabilities):
-					if "prius" in eachPrediction and int(eachProbability) > 50:
-						img = PriusImage.from_path(eachObjectPath)
-						hasPCA = img.has_pca_match()
-						print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
-							eachProbability) + " PCA: " + str(hasPCA))
-						found_prius = True
-						prius_prob = eachProbability
-					print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
-				try:
-					if found_prius:
-						shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
-						            args['images'] + '/detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
+			predictions, probabilities = prius.predict_vehicle(prediction_meta)
+			found_prius = False
+			prius_prob = ''
+			for eachPrediction, eachProbability in zip(predictions, probabilities):
+				if "prius" in eachPrediction and int(eachProbability) > 50:
+					img = PriusImage.from_path(eachObjectPath)
+					hasPCA = img.has_pca_match()
+					print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
+						eachProbability) + " PCA: " + str(hasPCA))
+					found_prius = True
+					prius_prob = eachProbability
+				print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
+			try:
+				if found_prius:
+					shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
+					            args['images'] + '/detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
 
-					shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-					            args['images'] + '/processed/' + image_meta['image_name'])
+				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
+				            args['images'] + '/processed/' + image_meta['image_name'])
 
-				except Exception as e:
-					pass
+			except Exception as e:
+				print("Exception while predicting: " + str(e))
 
-			end = time.time()
-			print("Prediction Time: " + str(end - start))
-		except Exception as e:
-			print("Exception while predicting: " + e)
+		end = time.time()
+		print("Prediction Time: " + str(end - start))
+		#except Exception as e:
+			#print("Exception while predicting: " + str(e))
 
 	def predict_threading(self):
 		while True:
