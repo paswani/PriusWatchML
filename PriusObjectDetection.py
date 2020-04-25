@@ -76,10 +76,11 @@ class PriusPredictor(object):
 
 	def detect_vehicle(self, meta_data):
 		try:
-			print("Detecting vehicle for " + meta_data['image_name'])
 
 			image = meta_data["image_path"] + meta_data['image_name']
 			output_image = self.output_path + meta_data['image_name']
+			print("Detecting vehicle for " + image + " -> " + output_image)
+
 			if os.path.exists(image) is not True:
 				print("File doesnt exist. File: " + "/frames/" + image)
 			detections, objects_path = self.detector.detectObjectsFromImage(input_image=image,

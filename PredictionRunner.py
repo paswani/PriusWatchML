@@ -37,12 +37,12 @@ class PriusPredictionRunner(object):
 		start = time.time()
 		try:
 			for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
-				# print(eachObject["name"], " : ", str(eachObject["percentage_probability"]), " : ",
-				#    str(eachObject["box_points"]))
+				print(eachObject["name"], " : ", str(eachObject["percentage_probability"]), " : ",
+					str(eachObject["box_points"]))
 				prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
 				                       image_path=eachObjectPath)
 
-				if "person" in eachObject or "prius" in eachObject or "car" in eachObject or "vehicle" in eachObject:
+				if "person" in eachObject["name"] or "car" in eachObject["name"] or "vehicle" in eachObject["name"]:
 					predictions, probabilities = prius.predict_vehicle(prediction_meta)
 					found_prius = False
 					prius_prob = ''
