@@ -15,7 +15,7 @@ from imageai.Prediction.Custom import CustomImagePrediction
 
 
 class PriusPredictor(object):
-	def __init__(self, image_path, model_path):
+	def __init__(self, image_path, model_path, output_path):
 		self.avgColor = []
 		self.pcaColors = []
 
@@ -35,11 +35,17 @@ class PriusPredictor(object):
 		self.image_path = image_path
 		self.output_path = image_path + "/detection/" + self.frame_folder + "/"
 
-		if os.path.exists(os.path.join(image_path, 'detection')) is False:
-			os.mkdir(os.path.join(image_path, 'detection'))
+		if os.path.exists(image_path) is False:
+			os.mkdir(image_path)
 
-		if os.path.exists(os.path.join(image_path, 'processed')) is False:
-			os.mkdir(os.path.join(image_path, 'processed'))
+		if os.path.exists(output_path) is False:
+			os.mkdir(output_path)
+
+		if os.path.exists(os.path.join(output_path, 'detection')) is False:
+			os.mkdir(os.path.join(output_path, 'detection'))
+
+		if os.path.exists(os.path.join(output_path, 'processed')) is False:
+			os.mkdir(os.path.join(output_path, 'processed'))
 
 		self.create_output_folder()
 

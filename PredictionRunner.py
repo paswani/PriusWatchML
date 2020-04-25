@@ -18,13 +18,15 @@ ap.add_argument("-m", "--models", required=False,
                 help="path to models")
 ap.add_argument("-t", "--threading", required=False,
                 help="thread, pool, or single")
+ap.add_argument("-o", "--output", required=False,
+                help="output path")
 args = vars(ap.parse_args())
 
 q = queue.Queue()
 
 images = []
 threads = []
-prius = PriusPredictor(args['images'], args['models'])
+prius = PriusPredictor(args['images'], args['models'], args['output'])
 
 class PriusPredictionRunner(object):
 
@@ -57,10 +59,10 @@ class PriusPredictionRunner(object):
 			try:
 				if found_prius:
 					shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
-					            args['images'] + '/detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
+					            args['output'] + '/detection/match_' + str(prius_prob) + '_' + str(hasPCA) + "_" + image_meta['image_name'])
 
 				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-				            args['images'] + '/processed/' + image_meta['image_name'])
+				            args['output'] + '/processed/' + image_meta['image_name'])
 
 			except Exception as e:
 				print("Exception while predicting: " + str(e))
