@@ -47,7 +47,7 @@ class PriusPredictionRunner(object):
 					found_prius = False
 					prius_prob = ''
 					for eachPrediction, eachProbability in zip(predictions, probabilities):
-						if "prius" in eachPrediction and int(eachProbability) > 50:
+						if "prius" in eachPrediction and int(eachProbability) > 75:
 							img = PriusImage.from_path(eachObjectPath)
 							hasPCA = img.has_pca_match()
 							print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
