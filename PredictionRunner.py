@@ -21,6 +21,9 @@ ap.add_argument("-t", "--threading", required=False,
                 help="thread, pool, or single")
 ap.add_argument("-o", "--output", required=False,
                 help="output path")
+ap.add_argument("-p", "--method", required=False,
+                default='detect',
+                help="only predict")
 args = vars(ap.parse_args())
 
 q = queue.Queue()
@@ -36,7 +39,7 @@ def get_files(path):
 	items = []
 	for root, d_names, f_names in os.walk(path):
 		for f in f_names:
-			items.append(os.path.join(root, f))
+			items.append(dict(image_path=os.path.dirname(root), image_name=f))
 	return items
 
 class PriusPredictionRunner(object):
@@ -44,27 +47,38 @@ class PriusPredictionRunner(object):
 	def __init__(self):
 		pass
 
+	def detect_vehicle(self, image_meta):
+		detected = prius.detect_vehicle(image_meta)
+
+		if "person" in eachObject["name"] or "car" in eachObject["name"]:
+			return detected
+		return False
+
+	def predict_vehicle(self, image_meta):
+		predictions, probabilities = prius.predict_vehicle(image_meta)
+		prius_prob = 0
+		found = False
+		for eachPrediction, eachProbability in zip(predictions, probabilities):
+			if "prius" in eachPrediction and int(eachProbability) > 90:
+				print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
+					eachProbability))
+				found = True
+				prius_prob = eachProbability
+			print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
+			ret_meta = dict(result=found, prob=prius_prob)
+		return ret_meta
+
 	def predict(self, image_meta):
 		start = time.time()
+		found_prius = False
+		prius_prob = 0
 		try:
-			found_prius = False
-			for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
-
+			for eachObject, eachObjectPath in self.detect_vehicle(image_meta):
 				prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
 				                       image_path=eachObjectPath)
-
-				if "person" in eachObject["name"] or "car" in eachObject["name"]:
-					predictions, probabilities = prius.predict_vehicle(prediction_meta)
-					prius_prob = ''
-					for eachPrediction, eachProbability in zip(predictions, probabilities):
-						if "prius" in eachPrediction and int(eachProbability) > 75:
-							img = PriusImage.from_path(eachObjectPath)
-							hasPCA = img.has_pca_match()
-							print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
-								eachProbability) + " PCA: " + str(hasPCA))
-							found_prius = True
-							prius_prob = eachProbability
-						print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
+				result_meta = self.predict_vehicle(prediction_meta)
+				found_prius = result_meta['result']
+				prius_prob = result_meta['prob']
 		except Exception as e:
 			print("Exception while predicting: " + str(e))
 
@@ -147,12 +161,12 @@ def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
-	for file in get_files(args['images']):
-		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
-			dir_len = len(os.path.dirname(file)) + 1
-			img_len = len(file)
-			runner.predict(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
-
+	for meta_data in get_files(args['images']):
+		if "processed" not in meta_data["image_name"] and "detection" not in meta_data["image_name"] and meta_data["image_name"].endswith(".jpg"):
+			if args["method"] == 'detect':
+				runner.predict(meta_data)
+			elif args["method"] == 'predict':
+				runner.predict_vehicle(meta_data)
 
 if __name__ == '__main__':
 	if args['threading'] == 'pool':

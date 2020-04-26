@@ -54,7 +54,7 @@ class PriusPredictor(object):
 			os.mkdir(self.output_path)
 
 	def predict_vehicle(self, prediction_meta):
-		detected_img = prediction_meta['image_path']
+		detected_img = os.path.join(prediction_meta['image_path'], prediction_meta['image_name'])
 		#if self.detect_pca(detected_img):
 		#	print("PCA match for: " + detected_img)
 
@@ -68,12 +68,12 @@ class PriusPredictor(object):
 	def detect_vehicle(self, meta_data):
 		try:
 
-			image = meta_data["image_path"] + meta_data['image_name']
+			image = os.path.join(meta_data["image_path"], meta_data['image_name'])
 			output_image = self.output_path + meta_data['image_name']
-			print("Detecting vehicle for " + image + " -> " + output_image)
+			print("Detecting vehicle for " + meta_data['image_name'] + " -> " + output_image)
 
 			if os.path.exists(image) is not True:
-				print("File doesnt exist. File: " + "/frames/" + image)
+				print("File doesnt exist. File: "  + image)
 			detections, objects_path = self.detector.detectObjectsFromImage(input_image=image,
 			                                                           extract_detected_objects=True,
 			                                                           output_image_path=output_image,
