@@ -1,5 +1,3 @@
-import argparse
-import glob
 import multiprocessing
 import os
 import queue
@@ -14,16 +12,22 @@ from PriusObjectDetection import PriusPredictor
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=False,
-                help="path to images")
+                help="path to images",
+                default="/content/drive/Colab Notebooks/")
 ap.add_argument("-m", "--models", required=False,
+                default="./",
                 help="path to models")
 ap.add_argument("-t", "--threading", required=False,
+                default="single",
                 help="thread, pool, or single")
 ap.add_argument("-o", "--output", required=False,
                 help="output path")
 ap.add_argument("-p", "--method", required=False,
-                default='detect',
+                default='predict',
                 help="only predict")
+ap.add_argument("-a", "--accuracy", required=False,
+                default=70,
+                help="Prius probability accuracy")
 args = vars(ap.parse_args())
 
 q = queue.Queue()
@@ -42,6 +46,7 @@ def get_files(path):
 			items.append(dict(image_path=os.path.dirname(root), image_name=f))
 	return items
 
+
 class PriusPredictionRunner(object):
 
 	def __init__(self):
@@ -59,14 +64,14 @@ class PriusPredictionRunner(object):
 		prius_prob = 0
 		found = False
 		for eachPrediction, eachProbability in zip(predictions, probabilities):
-			if "prius" in eachPrediction and int(eachProbability) > 90:
-				print("#### PRIUS IDENTIFIED: " + image_meta['image_name'] + " with probability " + str(
-					eachProbability))
+			if "prius" in eachPrediction and int(eachProbability) > args['accuracy']:
+				print("---> Prius Identified: " + image_meta['image_name'] + " with probability " + str(
+					eachProbability) + " at path:  " + image_meta['image_path'])
 				found = True
 				prius_prob = eachProbability
-			print(image_meta['image_name'] + " -> " + eachPrediction, " : ", eachProbability)
-			ret_meta = dict(result=found, prob=prius_prob)
-		return ret_meta
+				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
+				            image_meta['image_path'] + "/staging/" + str(prius_prob) + "-" + image_meta["image_name"])
+		return dict(result=found, prob=prius_prob)
 
 	def predict(self, image_meta):
 		start = time.time()
@@ -162,13 +167,49 @@ def start_predicting_single():
 
 	print("Populating images")
 	for meta_data in get_files(args['images']):
-		if "processed" not in meta_data["image_name"] and "detection" not in meta_data["image_name"] and meta_data["image_name"].endswith(".jpg"):
+		if "processed" not in meta_data["image_name"] and "detection" not in meta_data["image_name"] and meta_data[
+			"image_name"].endswith(".jpg"):
 			if args["method"] == 'detect':
 				runner.predict(meta_data)
 			elif args["method"] == 'predict':
 				runner.predict_vehicle(meta_data)
 
+
 if __name__ == '__main__':
+
+	if args['threading'] == 'pool':
+		start_predicting_pool()
+	elif args['threading'] == 'thread':
+		start_predicting_threads()
+	elif args['threading'] == 'single':
+		start_predicting_single()
+
+	print("Populating images")
+	for file in get_files(args['image']):
+		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
+			dir_len = len(os.path.dirname(file)) + 1
+			img_len = len(file)
+			q.put(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
+
+	print("Images populated.")
+	runner.start_threads(multiprocessing.cpu_count())
+
+
+def start_predicting_single():
+	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
+
+	print("Populating images")
+	for meta_data in get_files(args['images']):
+		if "processed" not in meta_data["image_name"] and "detection" not in meta_data["image_name"] and meta_data[
+			"image_name"].endswith(".jpg"):
+			if args["method"] == 'detect':
+				runner.predict(meta_data)
+			elif args["method"] == 'predict':
+				runner.predict_vehicle(meta_data)
+
+
+if __name__ == '__main__':
+
 	if args['threading'] == 'pool':
 		start_predicting_pool()
 	elif args['threading'] == 'thread':
