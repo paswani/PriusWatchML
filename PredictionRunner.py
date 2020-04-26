@@ -5,7 +5,7 @@ import shutil
 import threading
 import time
 from multiprocessing import Pool
-
+import argparse
 import cv2
 from PriusImage import PriusImage
 from PriusObjectDetection import PriusPredictor
