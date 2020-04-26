@@ -93,7 +93,7 @@ def save_result(result, file):
 
 	write_json(data)
 
-def findSignificantContour(img):
+def find_significant_contour(img):
 	image, contours, hierarchy = cv2.findContours(
 		img,
 		cv2.RETR_EXTERNAL,
@@ -137,7 +137,7 @@ def detect_color(image_src, image_name):
 	thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
 
 	# find contours in the thresholded image
-	cnts = findSignificantContour(thresh.copy())
+	cnts = find_significant_contour(thresh.copy())
 
 	#cnts = imutils.grab_contours(cnts)
 	# initialize the shape detector and color labeler
