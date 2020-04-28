@@ -26,7 +26,7 @@ class PriusPredictor(object):
 
 		self.prediction = CustomImagePrediction()
 		self.prediction.setModelTypeAsResNet()
-		self.prediction.setModelPath(model_path + "model_ex-027_acc-0.992647.h5")
+		self.prediction.setModelPath(model_path + "model_ex-012_acc-0.988819.h5")
 		self.prediction.setJsonPath(model_path + "model_class.json")
 		self.prediction.loadModel(num_objects=2)
 
@@ -74,10 +74,12 @@ class PriusPredictor(object):
 
 			if os.path.exists(image) is not True:
 				print("File doesnt exist. File: "  + image)
-			detections, objects_path = self.detector.detectObjectsFromImage(input_image=image,
-			                                                           extract_detected_objects=True,
-			                                                           output_image_path=output_image,
-			                                                           minimum_percentage_probability=50)
+			custom_objects = detector.CustomObjects(car=True)
+			detections, objects_path = detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
+			                                                                 input_image=image,
+			                                                                 extract_detected_objects=True,
+			                                                                 output_image_path=output_image,
+			                                                                 minimum_percentage_probability=50)
 
 			return zip(detections, objects_path)
 		except Exception as e:

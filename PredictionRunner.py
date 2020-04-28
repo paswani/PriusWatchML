@@ -1,14 +1,41 @@
+import argparse
 import multiprocessing
+import os
 import os
 import queue
 import shutil
 import threading
 import time
 from multiprocessing import Pool
-import argparse
+
 import cv2
 from PriusImage import PriusImage
 from PriusObjectDetection import PriusPredictor
+
+import os
+
+
+def get_files(path):
+	items = []
+	for root, d_names, f_names in os.walk(path):
+		for d in d_names:
+			for f in f_names:
+				items.append(dict(image_path=os.path.join(os.path.dirname(root), d), image_name=f))
+	return items
+
+
+import os
+
+from imageai.Detection import ObjectDetection
+
+for root, dirs, files in os.walk('/content/cars/'):
+	for name in files:
+		img = name
+		path = os.path.join(root, name)
+for name in dirs:
+	img = name
+path = os.path.join(root, name)
+
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=False,
@@ -70,7 +97,7 @@ class PriusPredictionRunner(object):
 				found = True
 				prius_prob = eachProbability
 				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-						os.path.join(image_meta['image_path'] ,  str(prius_prob) + "-" + image_meta["image_name"]))
+				            os.path.join(image_meta['image_path'], str(prius_prob) + "-" + image_meta["image_name"]))
 		return dict(result=found, prob=prius_prob)
 
 	def predict(self, image_meta):
