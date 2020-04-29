@@ -67,7 +67,6 @@ class PriusPredictor(object):
 
 	def detect_vehicle(self, meta_data):
 		try:
-
 			image = os.path.join(meta_data["image_path"], meta_data['image_name'])
 			output_image = self.output_path + meta_data['image_name']
 			print("Detecting vehicle for " + meta_data['image_name'] + " -> " + output_image)

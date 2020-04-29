@@ -17,25 +17,19 @@ import os
 
 def get_files(path):
 	items = []
-	for root, d_names, f_names in os.walk(path):
-		for d in d_names:
-			for f in f_names:
-				items.append(dict(image_path=os.path.join(os.path.dirname(root), d), image_name=f))
+	for root, dirs, files in os.walk(path):
+		for name in files:
+			img = name
+			items.append(dict(image_path=os.path.join(os.path.dirname(root), d), image_name=f))
+		for name in dirs:
+			img = name
+			path = os.path.join(root, name)
+			items.append(dict(image_path=os.path.join(os.path.dirname(root), d), image_name=name))
 	return items
 
 
 import os
-
 from imageai.Detection import ObjectDetection
-
-for root, dirs, files in os.walk('/content/cars/'):
-	for name in files:
-		img = name
-		path = os.path.join(root, name)
-for name in dirs:
-	img = name
-path = os.path.join(root, name)
-
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=False,
@@ -159,7 +153,6 @@ class PriusPredictionRunner(object):
 
 runner = PriusPredictionRunner()
 
-
 def start_predicting_pool():
 	print("Processor Count: " + str(multiprocessing.cpu_count()))
 
@@ -200,7 +193,6 @@ def start_predicting_single():
 				runner.predict(meta_data)
 			elif args["method"] == 'predict':
 				runner.predict_vehicle(meta_data)
-
 
 if __name__ == '__main__':
 
