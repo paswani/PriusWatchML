@@ -57,7 +57,7 @@ class PriusPredictor(object):
 		detected_img = os.path.join(prediction_meta['image_path'], prediction_meta['image_name'])
 		#if self.detect_pca(detected_img):
 		#	print("PCA match for: " + detected_img)
-
+		print("")
 		return self.prediction.predictImage(detected_img, result_count=2)
 
 
