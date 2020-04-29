@@ -202,36 +202,3 @@ if __name__ == '__main__':
 		start_predicting_threads()
 	elif args['threading'] == 'single':
 		start_predicting_single()
-
-	print("Populating images")
-	for file in get_files(args['images']):
-		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
-			dir_len = len(os.path.dirname(file)) + 1
-			img_len = len(file)
-			q.put(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
-
-	print("Images populated.")
-	runner.start_threads(multiprocessing.cpu_count())
-
-
-def start_predicting_single():
-	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
-
-	print("Populating images")
-	for meta_data in get_files(args['images']):
-		if "processed" not in meta_data["image_name"] and "detection" not in meta_data["image_name"] and meta_data[
-			"image_name"].endswith(".jpg"):
-			if args["method"] == 'detect':
-				runner.predict(meta_data)
-			elif args["method"] == 'predict':
-				runner.predict_vehicle(meta_data)
-
-
-if __name__ == '__main__':
-
-	if args['threading'] == 'pool':
-		start_predicting_pool()
-	elif args['threading'] == 'thread':
-		start_predicting_threads()
-	elif args['threading'] == 'single':
-		start_predicting_single()
