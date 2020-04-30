@@ -284,7 +284,7 @@ def detect_color(image_src, image_name):
 
 def has_prius_color(image, image_name):
 	detected_color = detect_color(image, image_name)
-	if detected_color[0] in prius_colors:
+	if detected_color in prius_colors:
 		return True
 	return False
 
