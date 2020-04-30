@@ -275,7 +275,7 @@ def detect_color(image_src, image_name):
 		print("Image " + image_name + " has contour with color " + str(color))
 		return color
 	except Exception as e:
-		print(e)
+		print("While detecting color: " + str(e))
 
 def has_prius_color(image, image_name):
 	detected_color = detect_color(image, image_name)

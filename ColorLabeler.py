@@ -94,7 +94,6 @@ for (i, (name, rgb)) in enumerate(global_colors.items()):
 # to L*a*b*
 lab = cv2.cvtColor(lab, cv2.COLOR_RGB2LAB)
 
-
 class ColorLabeler:
 	def __init__(self):
 		self.lab = lab

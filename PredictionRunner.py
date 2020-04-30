@@ -90,7 +90,7 @@ class PriusPredictionRunner(object):
 
 				if has_prius_color(eachObjectPath, eachObjectPath):
 					result_meta = self.predict_vehicle(prediction_meta)
-					found_prius = result_meta['result']
+					found_prius = True
 					prius_prob = result_meta['prob']
 		except Exception as e:
 			print("Exception while predicting: " + str(e))
@@ -98,8 +98,7 @@ class PriusPredictionRunner(object):
 		try:
 			if found_prius:
 				shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
-				            args['output'] + 'detection/match_' + str(prius_prob) + '_' + str(
-					            hasPCA) + "_" + image_meta['image_name'])
+				            args['output'] + 'detection/match_' + str(prius_prob) + "_" + image_meta['image_name'])
 
 			shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
 			            args['output'] + 'processed/' + image_meta['image_name'])
