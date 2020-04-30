@@ -7,7 +7,6 @@ import cv2
 import imutils
 import numpy as np
 from ColorLabeler import ColorLabeler
-from ShapeDetector import ShapeDetector
 from imutils import contours
 
 # construct the argument parse and parse the arguments
@@ -209,6 +208,45 @@ def find_significant_contour(img):
 
 	return contoursWithArea[0][0]
 
+def get_contour_colors(image_src):
+	# load the image and resize it to a smaller factor so that
+	# the shapes can be approximated better
+	# image = cv2.imread(os.path.join(path,image))
+	try:
+		image = cv2.imread(image_src)
+
+		resized = imutils.resize(image, width=300)
+		ratio = image.shape[0] / float(resized.shape[0])
+		# blur the resized image slightly, then convert it to both
+		# grayscale and the L*a*b* color spaces
+		blurred = cv2.GaussianBlur(resized, (5, 5), 0)
+		gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
+		lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
+		thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
+
+		# find contours in the thresholded image
+		cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+			cv2.CHAIN_APPROX_SIMPLE)
+		cnts = imutils.grab_contours(cnts)
+
+		cl = ColorLabeler()
+
+		contours = []
+		# loop over the contours
+		for c in cnts:
+			color = cl.label(lab, c)
+			contours.append(color)
+		return contours
+	except Exception as e:
+		print("While getting contours: " + str(e))
+
+def has_prius_contour(image):
+	colors = get_contour_colors(image)
+	for color in colors:
+		if color in prius_color:
+			return True
+	return False
+
 def detect_color(image_src, image_name):
 	# load the image and resize it to a smaller factor so that
 	# the shapes can be approximated better
@@ -236,7 +274,7 @@ def detect_color(image_src, image_name):
 		# loop over the contours
 		# for c in cnts:
 
-		color = cl.label(lab, cnts[0])
+		color = cl.label(lab, cnts)
 
 		contours.append(color)
 		print("Image " + image_name + " has contour with color " + str(color))
@@ -246,7 +284,7 @@ def detect_color(image_src, image_name):
 
 def has_prius_color(image, image_name):
 	detected_color = detect_color(image, image_name)
-	if detected_color in prius_colors:
+	if detected_color[0] in prius_colors:
 		return True
 	return False
 
