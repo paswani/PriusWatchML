@@ -251,31 +251,31 @@ def detect_color(image_src, image_name):
 	# load the image and resize it to a smaller factor so that
 	# the shapes can be approximated better
 	# image = cv2.imread(os.path.join(path,image))
-	#try:
-	image = cv2.imread(image_src)
+	try:
+		image = cv2.imread(image_src)
 
-	resized = imutils.resize(image, width=300)
-	ratio = image.shape[0] / float(resized.shape[0])
-	# blur the resized image slightly, then convert it to both
-	# grayscale and the L*a*b* color spaces
-	blurred = cv2.GaussianBlur(resized, (5, 5), 0)
-	gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-	lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
-	thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
+		resized = imutils.resize(image, width=300)
+		ratio = image.shape[0] / float(resized.shape[0])
+		# blur the resized image slightly, then convert it to both
+		# grayscale and the L*a*b* color spaces
+		blurred = cv2.GaussianBlur(resized, (5, 5), 0)
+		gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
+		lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
+		thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
 
-	# find contours in the thresholded image
-	cnts = find_significant_contour(thresh.copy())
+		# find contours in the thresholded image
+		cnts = find_significant_contour(thresh.copy())
 
-	# cnts = imutils.grab_contours(cnts)
-	# initialize the shape detector and color labeler
-	cl = ColorLabeler()
+		# cnts = imutils.grab_contours(cnts)
+		# initialize the shape detector and color labeler
+		cl = ColorLabeler()
 
-	color = cl.label(lab, cnts)
+		color = cl.label(lab, cnts)
 
-	print("Image " + image_name + " has contour with color " + str(color))
-	return color
-#	except Exception as e:
-#		print("While detecting color: " + str(e))
+		#print("Image " + image_name + " has contour with color " + str(color))
+		return color
+	except Exception as e:
+		print("While detecting color: " + str(e))
 
 def has_prius_color(image, image_name):
 	detected_color = detect_color(image, image_name)

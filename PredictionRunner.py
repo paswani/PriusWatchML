@@ -69,7 +69,7 @@ class PriusPredictionRunner(object):
 		prius_prob = 0
 		found = False
 		for eachPrediction, eachProbability in zip(predictions, probabilities):
-			print ("Prediction: " + str(eachPrediction) + " - Probabilitiy: " + str(eachProbability))
+			#print ("Prediction: " + str(eachPrediction) + " - Probabilitiy: " + str(eachProbability))
 			if "prius" in eachPrediction and int(eachProbability) > args['accuracy']:
 				print("---> Prius Identified: " + image_meta['image_name'] + " with probability " + str(
 					eachProbability) + " at path:  " + image_meta['image_path'])
@@ -83,17 +83,17 @@ class PriusPredictionRunner(object):
 		start = time.time()
 		found_prius = False
 		prius_prob = 0
-#
-		for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
-			prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
-			                       image_path=eachObjectPath)
+		try:
+			for eachObject, eachObjectPath in prius.detect_vehicle(image_meta):
+				prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
+				                       image_path=eachObjectPath)
 
-			if has_prius_color(eachObjectPath, eachObjectPath):
-				result_meta = self.predict_vehicle(prediction_meta)
-				found_prius = True
-				prius_prob = result_meta['prob']
-	#	except Exception as e:
-		#	print("Exception while predicting: " + str(e))
+				if has_prius_color(eachObjectPath, eachObjectPath):
+					result_meta = self.predict_vehicle(prediction_meta)
+					found_prius = True
+					prius_prob = result_meta['prob']
+		except Exception as e:
+			print("Exception while predicting: " + str(e))
 
 		try:
 			if found_prius:
