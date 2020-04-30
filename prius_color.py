@@ -1,20 +1,103 @@
 # import the necessary packages
 import argparse
+import json
 import os
 
 import cv2
 import imutils
+import numpy as np
 from ColorLabeler import ColorLabeler
 from ShapeDetector import ShapeDetector
 from imutils import contours
-import numpy as np
 
 # construct the argument parse and parse the arguments
+prius_list = [
+"aurometalsaurus",
+"bermuda grey [2]",
+"bali hai [2]",
+"tsunami",
+"abacus",
+"sirocco [2]",
+"venice blue [2]",
+"wishlist",
+"tapa [2]",
+"old silver",
+"regent grey [2]",
+"metallic blue",
+"steel teal",
+"cadet [2]",
+"imprint",
+"greyblue",
+"wavelength",
+"greyish blue",
+"grayish cerulean",
+"gateway",
+"PMS550",
+"scotty silver",
+"moderate cornflower blue",
+"PMS5425",
+"elevate",
+"PMS549",
+"air superiority blue",
+"grayish azure",
+"gothic [2]",
+"forecast",
+"hemisphere",
+"hoki [2]",
+"pewter blue",
+"blue bayoux [2]",
+"moby",
+"washed green",
+"nepal [2]",
+"boulevard",
+"bluff",
+"weldon blue",
+"blue moon",
+"horizon [2]",
+"crescent",
+"obelisk",
+"metamorphis",
+"compass",
+"escapade",
+"desaturated cyan",
+"PMS5415",
+"light slate grey",
+"optimist",
+"bluegrey",
+"juniper [2]",
+"innocence",
+"streetwise",
+"moonstone blue",
+"anemone green",
+"steel",
+"oslo grey [2]",
+"go ben [2]",
+"hit grey [2]",
+"jungle mist [2]",
+"instinct",
+"thor",
+"shuttle grey [2]",
+"metro",
+"dark electric blue",
+"nevada [2]",
+"smoke",
+"quarter tuna",
+"triple delta",
+"avatar",
+"double delta",
+"meridian",
+"storm grey [2]",
+"rackley"]
+
+prius_colors = frozenset(prius_list)
+'''
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--path", required=False,
                 help="path to the input image")
 ap.add_argument("-i", "--image", required=False,
                 help="path to the input image")
+ap.add_argument("-t", "--type", required=False,
+                help="Prius or Vehicle")
 args = vars(ap.parse_args())
 
 path = args['path']
@@ -57,11 +140,14 @@ arr = os.listdir(path)
 ]
 '''
 
-def write_json(data, filename="colors.json"):
+'''
+def write_json(data, filename="color_counts.json"):
 	with open(filename, "w") as f:
 		json.dump(data, f, indent=4)
 
-	'''
+
+'''
+
 						[{
 							"red": result['red'],
 							"green": result['green'],
@@ -69,7 +155,7 @@ def write_json(data, filename="colors.json"):
 							"shade": result['shade'],
 							"coords": result['coords']
 						}]
-					'''
+
 
 
 def save_result(result, file):
@@ -92,6 +178,8 @@ def save_result(result, file):
 		temp.img_class.append(y)
 
 	write_json(data)
+'''
+
 
 def find_significant_contour(img):
 	image, contours, hierarchy = cv2.findContours(
@@ -118,48 +206,74 @@ def find_significant_contour(img):
 		contoursWithArea.append([contour, area, contourIndex])
 
 	contoursWithArea.sort(key=lambda meta: meta[1], reverse=True)
-	largestContour = contoursWithArea[0][0]
-	return largestContour
+
+	return contoursWithArea[0][0]
 
 def detect_color(image_src, image_name):
 	# load the image and resize it to a smaller factor so that
 	# the shapes can be approximated better
 	# image = cv2.imread(os.path.join(path,image))
-	image = cv2.imread(image_src)
+	try:
+		image = cv2.imread(image_src)
 
-	resized = imutils.resize(image, width=300)
-	ratio = image.shape[0] / float(resized.shape[0])
-	# blur the resized image slightly, then convert it to both
-	# grayscale and the L*a*b* color spaces
-	blurred = cv2.GaussianBlur(resized, (5, 5), 0)
-	gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-	lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
-	thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
+		resized = imutils.resize(image, width=300)
+		ratio = image.shape[0] / float(resized.shape[0])
+		# blur the resized image slightly, then convert it to both
+		# grayscale and the L*a*b* color spaces
+		blurred = cv2.GaussianBlur(resized, (5, 5), 0)
+		gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
+		lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
+		thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
 
-	# find contours in the thresholded image
-	cnts = find_significant_contour(thresh.copy())
+		# find contours in the thresholded image
+		cnts = find_significant_contour(thresh.copy())
 
-	#cnts = imutils.grab_contours(cnts)
-	# initialize the shape detector and color labeler
-	cl = ColorLabeler()
+		# cnts = imutils.grab_contours(cnts)
+		# initialize the shape detector and color labeler
+		cl = ColorLabeler()
 
-	contours = []
-	# loop over the contours
-	#for c in cnts:
-	color = cl.label(lab, cnts)
-	contours.append(color)
-	print(str("Image " + image_name + " has contour with color " + str(color)))
+		contours = []
+		# loop over the contours
+		# for c in cnts:
 
-	return contours
+		color = cl.label(lab, cnts[0])
 
+		contours.append(color)
+		print("Image " + image_name + " has contour with color " + str(color))
+		return contours
+	except Exception as e:
+		print(e)
 
-for image in arr:
-	color = detect_color(os.path.join(path, image), image)
-	#print(color)
+def has_prius_color(image, image_name):
+	detected_color = detect_color(image, image_name)
+	if detected_color in prius_colors:
+		return True
+	return False
 
-'''
-		contour = {
-			"points": c,
-			""
-		}
-'''
+def load_counts():
+	with open("color_counts.json", "r") as read_file:
+		return json.load(read_file)
+
+def detect_colors():
+	results_dict = load_counts()
+	results = {}
+	if args['type'] == "prius":
+		results = results_dict['prius']
+	else:
+		results = results_dict['vehicle']
+
+	for image in arr:
+		color = detect_color(os.path.join(path, image), image)
+		if color is not None:
+			for color_result in color:
+				if color_result in results:
+					count = results[color_result]
+					results[color_result] = count + 1
+				else:
+					results[color_result] = 1
+
+	# print(str(results_dict))
+	# for key, value in results_dict['prius']:
+	#	print("Color: " + str(key) + "  Count: " + str(value))
+
+#write_json(results_dict)
