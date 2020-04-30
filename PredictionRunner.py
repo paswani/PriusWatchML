@@ -74,9 +74,7 @@ class PriusPredictionRunner(object):
 				print("---> Prius Identified: " + image_meta['image_name'] + " with probability " + str(
 					eachProbability) + " at path:  " + image_meta['image_path'])
 				found = True
-				prius_prob = eachProbability
-				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-				            os.path.join(image_meta['image_path'], str(prius_prob) + "-" + image_meta["image_name"]))
+
 		return dict(result=found, prob=prius_prob)
 
 	def predict(self, image_meta):
