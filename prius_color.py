@@ -205,8 +205,8 @@ def find_significant_contour(img):
 		contoursWithArea.append([contour, area, contourIndex])
 
 	contoursWithArea.sort(key=lambda meta: meta[1], reverse=True)
-
 	return contoursWithArea[0][0]
+
 
 def get_contour_colors(image_src):
 	# load the image and resize it to a smaller factor so that
@@ -270,15 +270,10 @@ def detect_color(image_src, image_name):
 		# initialize the shape detector and color labeler
 		cl = ColorLabeler()
 
-		contours = []
-		# loop over the contours
-		# for c in cnts:
-
 		color = cl.label(lab, cnts)
 
-		contours.append(color)
 		print("Image " + image_name + " has contour with color " + str(color))
-		return contours
+		return color
 	except Exception as e:
 		print(e)
 
@@ -303,12 +298,11 @@ def detect_colors():
 	for image in arr:
 		color = detect_color(os.path.join(path, image), image)
 		if color is not None:
-			for color_result in color:
-				if color_result in results:
-					count = results[color_result]
-					results[color_result] = count + 1
-				else:
-					results[color_result] = 1
+			if color in results:
+				count = results[color]
+				results[color] = count + 1
+			else:
+				results[color] = 1
 
 	# print(str(results_dict))
 	# for key, value in results_dict['prius']:

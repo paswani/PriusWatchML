@@ -59,15 +59,11 @@ class PriusPredictor(object):
 		if os.path.exists(detected_img) is not True:
 			detected_img = prediction_meta['image_path']
 
-		#if self.detect_pca(detected_img):
-		#	print("PCA match for: " + detected_img)
 		return self.prediction.predictImage(detected_img, result_count=2)
 
 	def predict_vehicle(self, prediction_meta):
 		detected_img = prediction_meta['image_path']
 
-		#if self.detect_pca(detected_img):
-		#	print("PCA match for: " + detected_img)
 		return self.prediction.predictImage(detected_img, result_count=2)
 
 	def detect_pca(self, image):
