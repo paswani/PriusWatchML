@@ -46,9 +46,14 @@ prius = PriusPredictor(args['images'], args['models'], args['output'])
 
 def get_files(path):
 	items = []
+	count = 0
 	for root, d_names, f_names in os.walk(path):
 		for f in f_names:
-			items.append(dict(image_path=os.path.dirname(root), image_name=f))
+			if count < 5000:
+				items.append(dict(image_path=root, image_name=f))
+				count = count + 1
+			else:
+				return items
 	return items
 
 
@@ -143,11 +148,8 @@ def start_predicting_pool():
 
 	print("Populating images")
 	for file in get_files(args['images']):
-		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
-			dir_len = len(os.path.dirname(file)) + 1
-			img_len = len(file)
-
-			images.append(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
+		if "processed" not in file["image_path"] and "detection" not in file["image_path"] and file["image_name"].endswith(".jpg"):
+			images.append(file)
 
 	print("Images populated.  Images: " + str(len(images)))
 	runner.start_pool(multiprocessing.cpu_count())
@@ -158,14 +160,11 @@ def start_predicting_threads():
 
 	print("Populating images")
 	for file in get_files(args['images']):
-		if "processed" not in file and "detection" not in file and file.endswith(".jpg"):
-			dir_len = len(os.path.dirname(file)) + 1
-			img_len = len(file)
-			q.put(dict(image_path=args["images"], image_name=file[dir_len:img_len]))
+		if "processed" not in file["image_path"] and "detection" not in file["image_path"] and file["image_name"].endswith(".jpg"):
+			q.put(file)
 
 	print("Images populated.")
 	runner.start_threads(multiprocessing.cpu_count())
-
 
 def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
@@ -178,21 +177,6 @@ def start_predicting_single():
 					runner.predict(dict(image_path=root, image_name=name))
 				elif args["method"] == 'predict':
 					runner.predict_vehicle(dict(image_path=root, image_name=name))
-		'''			
-		for name in dirs:
-			img = name
-			path = os.path.join(root, name)
-			items.append(dict(image_path=os.path.join(os.path.dirname(root), d), image_name=name))
-		'''
-	'''
-	for meta_data in get_files(args['images']):
-		if "processed" not in meta_data["image_name"] and "detection" not in meta_data["image_name"] and meta_data[
-			"image_name"].endswith(".jpg"):
-			if args["method"] == 'detect':
-				runner.predict(meta_data)
-			elif args["method"] == 'predict':
-				runner.predict_vehicle(meta_data)
-	'''
 
 if __name__ == '__main__':
 	if args['threading'] == 'pool':
