@@ -75,7 +75,7 @@ class PriusPredictionRunner(object):
 		found = False
 		for eachPrediction, eachProbability in zip(predictions, probabilities):
 			#print ("Prediction: " + str(eachPrediction) + " - Probabilitiy: " + str(eachProbability))
-			if "prius" in eachPrediction and int(eachProbability) > args['accuracy']:
+			if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
 				prius_prob = eachProbability
 				print("---> Prius Identified: " + image_meta['image_name'] + " with probability " + str(
 					eachProbability) + " at path:  " + image_meta['image_path'])
