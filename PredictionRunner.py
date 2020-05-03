@@ -33,6 +33,9 @@ ap.add_argument("-p", "--method", required=False,
 ap.add_argument("-a", "--accuracy", required=False,
                 default=70,
                 help="Prius probability accuracy")
+ap.add_argument("-r", "--results", required=False,
+                default=70,
+                help="Prius Results")
 args = vars(ap.parse_args())
 
 q = queue.Queue()
@@ -42,13 +45,13 @@ threads = []
 prius = PriusPredictor(args['images'], args['models'], args['output'])
 
 
-def write_json(data, filename="prius_results.json"):
+def write_json(data, filename=args['results'] + "prius_results.json"):
 	with open(filename, "w") as f:
 		json.dump(data, f, indent=4)
 
 
 def save_result(result):
-	with open("prius_results.json") as json_file:
+	with open(args['results'] + "prius_results.json") as json_file:
 		data = json.load(json_file)
 		temp = data
 
