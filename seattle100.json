@@ -1,0 +1,810 @@
+[  
+  {
+    "lattitude": 47.52678337,
+    "longitude": -122.3927558,
+    "id": "CMR-0112",
+    "description": "Fauntleroy Way SW & SW Cloverdale St",
+    "url": "http://seattle.gov/trafficcams/images/Fauntleroy_SW_Cloverdale_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.56110647,
+    "longitude": -122.3867781,
+    "id": "CMR-0038",
+    "description": "42nd Ave SW & SW Alaska St",
+    "url": "http://seattle.gov/trafficcams/images/42_SW_Alaska_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0093",
+    "description": "California Ave SW & SW Alaska St",
+    "url": "http://seattle.gov/trafficcams/images/California_SW_Alaska_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.57562625,
+    "longitude": -122.3867606,
+    "id": "CMR-0252",
+    "description": "California Ave SW & SW Hanford St",
+    "url": "http://seattle.gov/trafficcams/images/California_SW_Hanford_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.58119534,
+    "longitude": -122.3865458,
+    "id": "CMR-0250",
+    "description": "41st Ave SW & SW Admiral Way",
+    "url": "http://seattle.gov/trafficcams/images/41_SW_Admiral_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0251",
+    "description": "California Ave SW & SW Admiral Way",
+    "url": "http://seattle.gov/trafficcams/images/California_SW_Admiral_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.56112507,
+    "longitude": -122.3814815,
+    "id": "CMR-0113",
+    "description": "Fauntleroy Way SW & SW Alaska St",
+    "url": "http://seattle.gov/trafficcams/images/Fauntleroy_SW_Alaska_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.69060911,
+    "longitude": -122.3768061,
+    "id": "CMR-0008",
+    "description": "15th Ave NW & NW 85th St",
+    "url": "http://seattle.gov/trafficcams/images/15_NW_85_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.67635736,
+    "longitude": -122.3767588,
+    "id": "CMR-0007",
+    "description": "15th Ave NW & NW 65th St NS",
+    "url": "http://seattle.gov/trafficcams/images/15_NW_65_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0006",
+    "description": "15th Ave NW & NW 65th St EW",
+    "url": "http://seattle.gov/trafficcams/images/15_NW_65_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.64858621,
+    "longitude": -122.3763781,
+    "id": "CMR-0012",
+    "description": "15th Ave W & W Dravus St",
+    "url": "http://seattle.gov/trafficcams/images/15_W_Dravus_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.65388754,
+    "longitude": -122.3762566,
+    "id": "CMR-0013",
+    "description": "15th Ave W & W Emerson St",
+    "url": "http://seattle.gov/trafficcams/images/15_W_Emerson_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.66851433,
+    "longitude": -122.3762147,
+    "id": "CMR-0010",
+    "description": "15th Ave NW & NW Market St EW",
+    "url": "http://seattle.gov/trafficcams/images/15_NW_Market_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0011",
+    "description": "15th Ave NW & NW Market St NS",
+    "url": "http://seattle.gov/trafficcams/images/15_NW_Market_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.5651238,
+    "longitude": -122.3761854,
+    "id": "CMR-0032",
+    "description": "35th Ave SW @ Fauntleroy Way SW",
+    "url": "http://seattle.gov/trafficcams/images/35_SW_Fauntleroy_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.63766086,
+    "longitude": -122.3761428,
+    "id": "CMR-0292",
+    "description": "15th Ave W & W Armory Way",
+    "url": "http://seattle.gov/trafficcams/images/15_W_Armory_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.66365074,
+    "longitude": -122.3753012,
+    "id": "CMR-0009",
+    "description": "15th Ave NW & NW Leary Way",
+    "url": "http://seattle.gov/trafficcams/images/15_NW_Leary_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.57009895,
+    "longitude": -122.3729989,
+    "id": "CMR-0144",
+    "description": "W Seattle Bridge near SW Charlestown St",
+    "url": "http://seattle.gov/trafficcams/images/WSea_FwyPullOut_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0230",
+    "description": "Harbor Ave SW & S Spokane St",
+    "url": "http://seattle.gov/trafficcams/images/Harbor_SW_Spokane_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.62658452,
+    "longitude": -122.368357,
+    "id": "CMR-0108",
+    "description": "Elliott Ave W & W Mercer Pl",
+    "url": "http://seattle.gov/trafficcams/images/Elliott_W_Mercer_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.65894425,
+    "longitude": -122.3647161,
+    "id": "CMR-2023",
+    "description": "Leary Way NW & NW 43rd St",
+    "url": "http://seattle.gov/trafficcams/images/Leary_NW_43_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.62066371,
+    "longitude": -122.3609284,
+    "id": "CMR-0135",
+    "description": "Queen Anne Ave N & Mercer St",
+    "url": "http://seattle.gov/trafficcams/images/QAnne_N_Mercer_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0145",
+    "description": "Western Ave & Elliott St",
+    "url": "http://seattle.gov/trafficcams/images/Western_Elliott_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.57195535,
+    "longitude": -122.3600483,
+    "id": "CMR-0094",
+    "description": "Chelan Ave SW & W Marginal Way",
+    "url": "http://seattle.gov/trafficcams/images/Chelan_SW_WMarg_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0143",
+    "description": "W Seattle Bridge @ Delridge Way Exit",
+    "url": "http://seattle.gov/trafficcams/images/WSB_Delridge_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.62545416,
+    "longitude": -122.3567027,
+    "id": "CMR-0234",
+    "description": "Queen Anne Ave N & Roy St",
+    "url": "http://seattle.gov/trafficcams/images/QAnne_N_Roy_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.72323367,
+    "longitude": -122.3555467,
+    "id": "CMR-0246",
+    "description": "Greenwood Ave N & N 125th St",
+    "url": "http://seattle.gov/trafficcams/images/Greenwood_N_125_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0247",
+    "description": "Greenwood Ave N & N 130th St",
+    "url": "http://seattle.gov/trafficcams/images/Greenwood_N_130_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.71415878,
+    "longitude": -122.3555159,
+    "id": "CMR-0245",
+    "description": "Greenwood Ave N & N 117th St",
+    "url": "http://seattle.gov/trafficcams/images/Greenwood_N_117_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.61860207,
+    "longitude": -122.3554531,
+    "id": "CMR-0106",
+    "description": "Elliott Ave & Broad St",
+    "url": "http://seattle.gov/trafficcams/images/Elliott_Broad_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0017",
+    "description": "1st Ave & Denny Way",
+    "url": "http://seattle.gov/trafficcams/images/1_N_Denny_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0182",
+    "description": "Western Ave & Broad St",
+    "url": "http://seattle.gov/trafficcams/images/Western_Broad_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0171",
+    "description": "1st Ave & Broad St",
+    "url": "http://seattle.gov/trafficcams/images/1_Broad_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.70508354,
+    "longitude": -122.3554527,
+    "id": "CMR-0206",
+    "description": "Greenwood Ave N & N 105th St",
+    "url": "http://seattle.gov/trafficcams/images/Greenwood_N_105_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.65148486,
+    "longitude": -122.3513564,
+    "id": "CMR-0109",
+    "description": "Evanston Ave N & N 36th St",
+    "url": "http://seattle.gov/trafficcams/images/Evanston_N_36_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0114",
+    "description": "Fremont Ave N & N 36th St",
+    "url": "http://seattle.gov/trafficcams/images/Fremont_N_36_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-2024",
+    "description": "Fremont Ave N & N 34th St",
+    "url": "http://seattle.gov/trafficcams/images/Fremont_N_34_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.61281375,
+    "longitude": -122.351186,
+    "id": "CMR-0186",
+    "description": "Western Ave & Wall St",
+    "url": "http://seattle.gov/trafficcams/images/Western_Wall_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0169",
+    "description": "3rd Ave & Wall St",
+    "url": "http://seattle.gov/trafficcams/images/3_Wall_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0167",
+    "description": "1st Ave & Wall St EW",
+    "url": "http://seattle.gov/trafficcams/images/1_Wall_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0185",
+    "description": "2nd Ave & Battery St",
+    "url": "http://seattle.gov/trafficcams/images/2_Battery_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0168",
+    "description": "1st Ave & Wall St NS",
+    "url": "http://seattle.gov/trafficcams/images/1_Wall_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0261",
+    "description": "Alaskan Way & Wall St",
+    "url": "http://seattle.gov/trafficcams/images/Alaskan_Wall_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.64608321,
+    "longitude": -122.3497214,
+    "id": "CMR-0041",
+    "description": "4th Ave N & Dexter Ave N",
+    "url": "http://seattle.gov/trafficcams/images/Westlake_N_Dexter_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.5716136,
+    "longitude": -122.3491024,
+    "id": "CMR-0142",
+    "description": "W Seattle Bridge Mid-Span",
+    "url": "http://seattle.gov/trafficcams/images/WSB_Midspan_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0001",
+    "description": "11th Ave SW & SW Spokane St",
+    "url": "http://seattle.gov/trafficcams/images/11_SW_Spokane_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.61857627,
+    "longitude": -122.3489252,
+    "id": "CMR-0047",
+    "description": "5th Ave & Battery St East Side",
+    "url": "http://seattle.gov/trafficcams/images/5_Battery_East.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0048",
+    "description": "5th Ave & Battery St West Side",
+    "url": "http://seattle.gov/trafficcams/images/5_Battery_West.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0051",
+    "description": "5th Ave N & Broad St",
+    "url": "http://seattle.gov/trafficcams/images/5_Broad_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0040",
+    "description": "4th Ave & Battery St",
+    "url": "http://seattle.gov/trafficcams/images/4_Battery_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0096",
+    "description": "4th Ave N & Denny Way",
+    "url": "http://seattle.gov/trafficcams/images/4_Denny_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0056",
+    "description": "6th Ave & Wall St",
+    "url": "http://seattle.gov/trafficcams/images/6_Wall_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.62456148,
+    "longitude": -122.347571,
+    "id": "CMR-0162",
+    "description": "5th Ave & Mercer St EW",
+    "url": "http://seattle.gov/trafficcams/images/5_Mercer_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0163",
+    "description": "5th Ave N & Mercer St NS",
+    "url": "http://seattle.gov/trafficcams/images/5_Mercer_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0235",
+    "description": "6th Ave N & SR 99",
+    "url": "http://seattle.gov/trafficcams/images/6_N_SR99_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0081",
+    "description": "Aurora Ave N & Ward St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_Ward_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0236",
+    "description": "Aurora Ave N & Harrison St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_Harrison_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0220",
+    "description": "Taylor Ave & Mercer St",
+    "url": "http://seattle.gov/trafficcams/images/Taylor_N_Mercer_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.66214544,
+    "longitude": -122.3471494,
+    "id": "CMR-0077",
+    "description": "Aurora Ave N & N 46th St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_46_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.72321542,
+    "longitude": -122.3467974,
+    "id": "CMR-0074",
+    "description": "Aurora Ave N & N 130th St NS",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_130_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0073",
+    "description": "Aurora Ave N & N 130th St EW",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_130_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.69056829,
+    "longitude": -122.346387,
+    "id": "CMR-0080",
+    "description": "Aurora Ave N & N 90th St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_90_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0079",
+    "description": "Aurora Ave N & N 87th St NS",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_87_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0078",
+    "description": "Aurora Ave N & N 85th St EW",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_85_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.73349769,
+    "longitude": -122.34509,
+    "id": "CMR-0076",
+    "description": "Aurora Ave N & N 145th St NS",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_145_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0075",
+    "description": "Aurora Ave N & N 145th St EW",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_145_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.71477675,
+    "longitude": -122.3448525,
+    "id": "CMR-0072",
+    "description": "Aurora Ave N & N 117th Pl",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_117_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.70505121,
+    "longitude": -122.3446941,
+    "id": "CMR-0070",
+    "description": "Aurora Ave N & N 103rd St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_103_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0071",
+    "description": "Aurora Ave N & N 105th St EW",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_105_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.68277237,
+    "longitude": -122.3444844,
+    "id": "CMR-0082",
+    "description": "Aurora Ave N & N Winona St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_Winona_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.61327122,
+    "longitude": -122.3443534,
+    "id": "CMR-0174",
+    "description": "4th Ave & Virginia St",
+    "url": "http://seattle.gov/trafficcams/images/4_Virginia_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0170",
+    "description": "6th Ave & Lenora St",
+    "url": "http://seattle.gov/trafficcams/images/6_Lenora_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0016",
+    "description": "1st Ave & Stewart St",
+    "url": "http://seattle.gov/trafficcams/images/1_Stewart_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0030",
+    "description": "2nd Ave & Stewart St",
+    "url": "http://seattle.gov/trafficcams/images/2_Stewart_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0034",
+    "description": "3rd Ave & Stewart st",
+    "url": "http://seattle.gov/trafficcams/images/3_Stewart_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0264",
+    "description": "2nd Ave & Blanchard St",
+    "url": "http://seattle.gov/trafficcams/images/2_Blanchard_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.63575345,
+    "longitude": -122.3434826,
+    "id": "CMR-0068",
+    "description": "Aurora Ave N & Howe St",
+    "url": "http://seattle.gov/trafficcams/images/Aurora_N_Howe_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.61855017,
+    "longitude": -122.3424019,
+    "id": "CMR-0173",
+    "description": "7th Ave & Virginia St",
+    "url": "http://seattle.gov/trafficcams/images/7_Virginia_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0098",
+    "description": "Dexter Ave & Denny Way",
+    "url": "http://seattle.gov/trafficcams/images/Dexter_Denny_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0266",
+    "description": "9th Ave N & Thomas St",
+    "url": "http://seattle.gov/trafficcams/images/9_N_Thomas_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0184",
+    "description": "Westlake Ave & Denny Way NS",
+    "url": "http://seattle.gov/trafficcams/images/Westlake_Denny_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0267",
+    "description": "Westlake Ave & Denny Way EW",
+    "url": "http://seattle.gov/trafficcams/images/Westlake_Denny_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0260",
+    "description": "Westlake Ave N & Harrison St",
+    "url": "http://seattle.gov/trafficcams/images/Westlake_N_Harrison_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.62454973,
+    "longitude": -122.3423496,
+    "id": "CMR-0154",
+    "description": "9th Ave N & Mercer St",
+    "url": "http://seattle.gov/trafficcams/images/9_N_Mercer_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0146",
+    "description": "Westlake Ave & Valley St",
+    "url": "http://seattle.gov/trafficcams/images/Westlake_Broad_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0203",
+    "description": "9th Ave N & Roy St",
+    "url": "http://seattle.gov/trafficcams/images/9_Broad_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0211",
+    "description": "Dexter Ave N & Mercer St",
+    "url": "http://seattle.gov/trafficcams/images/Dexter_N_Mercer_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.60804248,
+    "longitude": -122.341879,
+    "id": "CMR-0176",
+    "description": "5th Ave & Pine St EW",
+    "url": "http://seattle.gov/trafficcams/images/5_Pine_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0039",
+    "description": "4th Ave & Olive St",
+    "url": "http://seattle.gov/trafficcams/images/4_Olive_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0179",
+    "description": "Western Ave & Spring St",
+    "url": "http://seattle.gov/trafficcams/images/Western_Spring_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0217",
+    "description": "1st Ave & Seneca St",
+    "url": "http://seattle.gov/trafficcams/images/1_Seneca_EW.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0178",
+    "description": "1st Ave & Union St",
+    "url": "http://seattle.gov/trafficcams/images/1_Union_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0069",
+    "description": "2nd Ave & University St",
+    "url": "http://seattle.gov/trafficcams/images/2_University_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0164",
+    "description": "Alaskan Way & Pike St",
+    "url": "http://seattle.gov/trafficcams/images/Alaskan_Pike_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0257",
+    "description": "4th Ave & Pine St",
+    "url": "http://seattle.gov/trafficcams/images/4_Pine_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0165",
+    "description": "Alaskan Way & University St",
+    "url": "http://seattle.gov/trafficcams/images/Alaskan_University_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0153",
+    "description": "Alaskan Way & Madison St",
+    "url": "http://seattle.gov/trafficcams/images/Alaskan_Madison_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.66503445,
+    "longitude": -122.3402075,
+    "id": "CMR-0115",
+    "description": "Greenlake Way N & N 50th St",
+    "url": "http://seattle.gov/trafficcams/images/Greenlake_N_50_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": 47.57557977,
+    "longitude": -122.3399904,
+    "id": "CMR-0066",
+    "description": "SR-99 @ S Lander St",
+    "url": "http://seattle.gov/trafficcams/images/SR99_Lander_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0100",
+    "description": "E Marginal Way S & S Hanford St",
+    "url": "http://seattle.gov/trafficcams/images/EMarg_S_Hanford_NS.jpg",
+    "type": "sdot"
+  },
+  {
+    "lattitude": null,
+    "longitude": null,
+    "id": "CMR-0233",
+    "description": "E Marginal Way S & S Spokane St",
+    "url": "http://seattle.gov/trafficcams/images/EMarg_S_Spokane_EW.jpg",
+    "type": "sdot"
+  }
+] 
