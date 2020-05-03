@@ -22,7 +22,7 @@ class PriusPredictor(object):
 		self.detector = ObjectDetection()
 		self.detector.setModelTypeAsYOLOv3()
 		self.detector.setModelPath(model_path + "yolo.h5")
-		self.detector.loadModel()
+		self.detector.loadModel(detection_speed="flash")
 
 		self.prediction = CustomImagePrediction()
 		self.prediction.setModelTypeAsResNet()
@@ -72,10 +72,10 @@ class PriusPredictor(object):
 
 	def detect_vehicle(self, meta_data):
 		try:
+
 			image = os.path.join(meta_data["image_path"], meta_data['image_name'])
 			output_image = self.output_path + meta_data['image_name']
-			print("Detecting vehicle for " + meta_data['image_name'] + " -> " + output_image)
-
+			#print("Detecting vehicle for " + meta_data['image_name'] + " -> " + output_image)
 			if os.path.exists(image) is not True:
 				print("File doesnt exist. File: "  + image)
 			custom_objects = self.detector.CustomObjects(car=True)
@@ -88,3 +88,17 @@ class PriusPredictor(object):
 			return zip(detections, objects_path)
 		except Exception as e:
 			print("While detecting vehicle: " + str(e))
+
+	def detect_vehicle_from_array(self, decoded):
+
+			#print("Detecting vehicle for " + meta_data['image_name'] + " -> " + output_image)
+
+		custom_objects = self.detector.CustomObjects(car=True)
+		result = self.detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
+		                                                                     input_type="array",
+			                                                                 input_image=np.array(decoded),
+			                                                                 #output_type="array",
+			                                                                 minimum_percentage_probability=50)
+
+		print("Detected: " + str(result))
+		return result

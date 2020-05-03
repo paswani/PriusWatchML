@@ -181,7 +181,7 @@ def save_result(result, file):
 
 
 def find_significant_contour(img):
-	contours, hierarchy = cv2.findContours(
+	image,contours, hierarchy = cv2.findContours(
 		img,
 		cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE
@@ -207,14 +207,17 @@ def find_significant_contour(img):
 	contoursWithArea.sort(key=lambda meta: meta[1], reverse=True)
 	return contoursWithArea[0][0]
 
-
 def get_contour_colors(image_src):
 	# load the image and resize it to a smaller factor so that
 	# the shapes can be approximated better
 	# image = cv2.imread(os.path.join(path,image))
-	try:
-		image = cv2.imread(image_src)
+	return get_contour_colors_from_array(cv2.imread(image_src))
 
+def get_contour_colors_from_array(image):
+	# load the image and resize it to a smaller factor so that
+	# the shapes can be approximated better
+	# image = cv2.imread(os.path.join(path,image))
+	try:
 		resized = imutils.resize(image, width=300)
 		ratio = image.shape[0] / float(resized.shape[0])
 		# blur the resized image slightly, then convert it to both
@@ -243,17 +246,25 @@ def get_contour_colors(image_src):
 def has_prius_contour(image):
 	colors = get_contour_colors(image)
 	for color in colors:
-		if color in prius_color:
+		if color in prius_colors:
 			return True
 	return False
 
-def detect_color(image_src, image_name):
+def has_prius_contour_from_array(arr):
+	colors = get_contour_colors_from_array(arr)
+	for color in colors:
+		if color in prius_colors:
+			return True
+	return False
+
+def detect_color(image_src):
+	return detect_color_from_array(cv2.imread(image_src))
+
+def detect_color_from_array(image):
 	# load the image and resize it to a smaller factor so that
 	# the shapes can be approximated better
 	# image = cv2.imread(os.path.join(path,image))
 	try:
-		image = cv2.imread(image_src)
-
 		resized = imutils.resize(image, width=300)
 		ratio = image.shape[0] / float(resized.shape[0])
 		# blur the resized image slightly, then convert it to both
@@ -266,19 +277,20 @@ def detect_color(image_src, image_name):
 		# find contours in the thresholded image
 		cnts = find_significant_contour(thresh.copy())
 
-		# cnts = imutils.grab_contours(cnts)
-		# initialize the shape detector and color labeler
 		cl = ColorLabeler()
-
 		color = cl.label(lab, cnts)
-
-		#print("Image " + image_name + " has contour with color " + str(color))
 		return color
 	except Exception as e:
 		print("While detecting color: " + str(e))
 
-def has_prius_color(image, image_name):
-	detected_color = detect_color(image, image_name)
+def has_prius_color(image):
+	detected_color = detect_color(image)
+	if detected_color in prius_colors:
+		return True
+	return False
+
+def has_prius_color_from_array(image):
+	detected_color = detect_color_from_array(image)
 	if detected_color in prius_colors:
 		return True
 	return False

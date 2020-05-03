@@ -1,8 +1,7 @@
 import argparse
 import multiprocessing
 import os
-import os
-import os
+import json
 import queue
 import shutil
 import threading
@@ -36,6 +35,8 @@ ap.add_argument("-a", "--accuracy", required=False,
 ap.add_argument("-r", "--results", required=False,
                 default=70,
                 help="Prius Results")
+ap.add_argument("-z", "--test", required=False,
+                help="True for test",default=False)
 args = vars(ap.parse_args())
 
 q = queue.Queue()
@@ -96,11 +97,11 @@ class PriusPredictionRunner(object):
 					eachProbability) + " at path:  " + image_meta['image_path'])
 
 				result = {
-					"time": str(dlocaltime()),
+					"time": str(time.localtime()),
 					"image_name": image_meta["image_name"],
 					"image_path": image_meta["image_path"],
 					"probability": str(eachProbability),
-					"object": str(eachObject)
+					"object": str(eachPrediction)
 				}
 
 				save_result(result)
@@ -108,6 +109,39 @@ class PriusPredictionRunner(object):
 				found = True
 
 		return dict(result=found, prob=prius_prob)
+
+	def predict_array(self, decoded):
+		start = time.time()
+		found_prius = False
+		prius_prob = 0
+		try:
+			prius.detect_vehicle_from_array(decoded)
+				#prediction_meta = dict(image_name=eachObject['name'], image_points=eachObject["box_points"],
+				                   #    image_path=eachObjectPath)
+
+				#if has_prius_color(eachObjectPath, eachObjectPath):
+				#	result_meta = self.predict_vehicle(prediction_meta)
+			#		found_prius = result_meta['result']
+		#			prius_prob = result_meta['prob']
+		'''
+		except Exception as e:
+			print("Exception while predicting: " + str(e))
+
+		try:
+			if found_prius:
+				shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
+				            args['output'] + 'detection/match_' + str(prius_prob) + "_" + image_meta['image_name'])
+
+			if args['test'] is False:
+				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
+				            args['output'] + 'processed/' + image_meta['image_name'])
+'''
+		except Exception as e:
+			print("Exception while predicting: " + str(e))
+
+		end = time.time()
+		print("Prediction Time: " + str(end - start))
+
 
 	def predict(self, image_meta):
 		start = time.time()
@@ -130,8 +164,9 @@ class PriusPredictionRunner(object):
 				shutil.copy(os.path.join(image_meta['image_path'], image_meta['image_name']),
 				            args['output'] + 'detection/match_' + str(prius_prob) + "_" + image_meta['image_name'])
 
-			shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
-			            args['output'] + 'processed/' + image_meta['image_name'])
+			if args['test'] is False:
+				shutil.move(os.path.join(image_meta['image_path'], image_meta['image_name']),
+				            args['output'] + 'processed/' + image_meta['image_name'])
 
 		except Exception as e:
 			print("Exception while predicting: " + str(e))
