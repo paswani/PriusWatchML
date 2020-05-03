@@ -2,6 +2,7 @@ import argparse
 import multiprocessing
 import os
 import os
+import os
 import queue
 import shutil
 import threading
@@ -11,11 +12,8 @@ from multiprocessing import Pool
 import cv2
 from PriusImage import PriusImage
 from PriusObjectDetection import PriusPredictor
-
-from prius_color import has_prius_color
-import os
-
 from imageai.Detection import ObjectDetection
+from prius_color import has_prius_color
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=False,
@@ -42,6 +40,20 @@ q = queue.Queue()
 images = []
 threads = []
 prius = PriusPredictor(args['images'], args['models'], args['output'])
+
+
+def write_json(data, filename="prius_results.json"):
+	with open(filename, "w") as f:
+		json.dump(data, f, indent=4)
+
+
+def save_result(result):
+	with open("prius_results.json") as json_file:
+		data = json.load(json_file)
+		temp = data
+
+		temp.append(result)
+	write_json(data)
 
 
 def get_files(path):
@@ -74,11 +86,22 @@ class PriusPredictionRunner(object):
 		prius_prob = 0
 		found = False
 		for eachPrediction, eachProbability in zip(predictions, probabilities):
-			#print ("Prediction: " + str(eachPrediction) + " - Probabilitiy: " + str(eachProbability))
+			# print ("Prediction: " + str(eachPrediction) + " - Probabilitiy: " + str(eachProbability))
 			if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
 				prius_prob = eachProbability
 				print("---> Prius Identified: " + image_meta['image_name'] + " with probability " + str(
 					eachProbability) + " at path:  " + image_meta['image_path'])
+
+				result = {
+					"time": str(dlocaltime()),
+					"image_name": image_meta["image_name"],
+					"image_path": image_meta["image_path"],
+					"probability": str(eachProbability),
+					"object": str(eachObject)
+				}
+
+				save_result(result)
+
 				found = True
 
 		return dict(result=found, prob=prius_prob)
@@ -143,12 +166,14 @@ class PriusPredictionRunner(object):
 
 runner = PriusPredictionRunner()
 
+
 def start_predicting_pool():
 	print("Processor Count: " + str(multiprocessing.cpu_count()))
 
 	print("Populating images")
 	for file in get_files(args['images']):
-		if "processed" not in file["image_path"] and "detection" not in file["image_path"] and file["image_name"].endswith(".jpg"):
+		if "processed" not in file["image_path"] and "detection" not in file["image_path"] and file[
+			"image_name"].endswith(".jpg"):
 			images.append(file)
 
 	print("Images populated.  Images: " + str(len(images)))
@@ -160,11 +185,13 @@ def start_predicting_threads():
 
 	print("Populating images")
 	for file in get_files(args['images']):
-		if "processed" not in file["image_path"] and "detection" not in file["image_path"] and file["image_name"].endswith(".jpg"):
+		if "processed" not in file["image_path"] and "detection" not in file["image_path"] and file[
+			"image_name"].endswith(".jpg"):
 			q.put(file)
 
 	print("Images populated.")
 	runner.start_threads(multiprocessing.cpu_count())
+
 
 def start_predicting_single():
 	print("Single Thread - Processor Count: " + str(multiprocessing.cpu_count()))
@@ -177,6 +204,7 @@ def start_predicting_single():
 					runner.predict(dict(image_path=root, image_name=name))
 				elif args["method"] == 'predict':
 					runner.predict_vehicle(dict(image_path=root, image_name=name))
+
 
 if __name__ == '__main__':
 	if args['threading'] == 'pool':
