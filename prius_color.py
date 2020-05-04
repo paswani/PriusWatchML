@@ -86,7 +86,7 @@ def write_json(data, filename="color_counts.json"):
 
 
 def find_significant_contour(img):
-	contours, hierarchy = cv2.findContours(
+	image, contours, hierarchy = cv2.findContours(
 		img,
 		cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE
@@ -188,8 +188,7 @@ def get_contour_colors_from_array(image):
 			color = cl.label(lab, cnts)
 			return color
 		except Exception as e:
-			print("While detecting color: "
-			str(e))
+			print("While detecting color: " + str(e))
 
 		def has_prius_color(image):
 			detected_color = detect_color(image)
@@ -220,8 +219,7 @@ def get_contour_colors_from_array(image):
 				if color is not None:
 					if color in results:
 						count = results[color]
-						results[color] = count
-						1
+						results[color] = count + 1
 					else:
 						results[color] = 1
 
