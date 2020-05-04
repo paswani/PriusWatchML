@@ -72,7 +72,7 @@ global_colors = OrderedDict({
 		})
 dict_colors = {}
 
-with open("colors.json", "r") as read_file:
+with open("colors_min.json", "r") as read_file:
 	print("Loading Colors")
 	dict_colors = json.load(read_file)
 

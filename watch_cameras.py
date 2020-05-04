@@ -32,7 +32,9 @@ ap.add_argument("-t", "--timer", required=False,
 ap.add_argument("-c", "--cams", default='min_cams2.json',
                 help="Cam JSON")
 ap.add_argument("-p", "--path", default='./',
-                help='Results Path')
+                help='Image Path')
+ap.add_argument("-o", "--output", default='./',
+                help='Output Path')
 ap.add_argument("-a", "--accuracy", default=50,
                 help="predict accuracy")
 ap.add_argument("-y", "--detectspeed", default='normal',
@@ -45,6 +47,9 @@ ap.add_argument("-m", "--models", default='./',
                 help='model path')
 
 args = vars(ap.parse_args())
+
+if os.path.isdir(args['output']) is False:
+	os.mkdir(args['output'])
 
 detector = ObjectDetection()
 detector.setModelTypeAsYOLOv3()
@@ -60,7 +65,7 @@ prediction.setJsonPath(args['models'] + "model_class.json")
 prediction.loadModel(num_objects=2, prediction_speed=args["predictspeed"])
 
 
-def write_json(data, filename=args['path'] + "prius_results.json"):
+def write_json(data, filename=args['output'] + "prius_results.json"):
 	with open(filename, "w") as f:
 		json.dump(data, f, indent=4)
 
@@ -111,7 +116,6 @@ def watch_camera(cam):
 			                                               extract_detected_objects=True,
 			                                               input_image=decoded,
 			                                               output_type="array",
-			                                               thread_safe=True,
 			                                               minimum_percentage_probability=50)
 			start2 = time.time()
 
@@ -123,7 +127,6 @@ def watch_camera(cam):
 
 				start2 = time.time()
 				predictions, probabilities = prediction.predictImage(img,
-				                                                     thread_safe=True,
 				                                                     input_type="array",
 				                                                     result_count=2)
 				start3 = time.time()
@@ -132,18 +135,19 @@ def watch_camera(cam):
 				for eachPrediction, eachProbability in zip(predictions, probabilities):
 					if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
 						colorStart = time.time()
-						has_color = has_prius_color_from_array(img)
+						detected_color = has_prius_color_from_array(img)
 						colorEnd = time.time()
 						print("has_color Time: " + str(colorEnd - colorStart))
 
-						if has_color is True:
+						if detected_color is not None:
 							success = {
 								'timestamp': frame_time,
 								'image_name': frame_match_file,
 								'detected_name': frame_detected_file,
-								'image_path': args['path'],
+								'image_path': args['output'],
 								'cam_id': str(cam['id']),
 								'probability': str(eachProbability),
+								'color': detected_color,
 								'predictor': args['name']
 							}
 							r = ''
@@ -159,10 +163,10 @@ def watch_camera(cam):
 								print("POST Failed.  Saving manually.")
 								save_result(success)
 
-							with open(args['path'] + frame_match_file, 'wb') as handler:
+							with open(args['output'] + frame_match_file, 'wb') as handler:
 								handler.write(img_data)
 
-							cv2.imwrite(args['path'] + frame_detected_file, img)
+							cv2.imwrite(args['output'] + frame_detected_file, img)
 	except Exception as e:
 		print(e)
 
