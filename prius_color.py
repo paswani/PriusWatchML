@@ -86,7 +86,7 @@ def write_json(data, filename="color_counts.json"):
 
 
 def find_significant_contour(img):
-	image, contours, hierarchy = cv2.findContours(
+	contours, hierarchy = cv2.findContours(
 		img,
 		cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE
