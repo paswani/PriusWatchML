@@ -150,81 +150,81 @@ def get_contour_colors_from_array(image):
 	except Exception as e:
 		print("While getting contours: " + str(e))
 
-	def has_prius_contour(image):
-		colors = get_contour_colors(image)
-		for color in colors:
-			if color in prius_colors:
-				return True
-		return False
+def has_prius_contour(image):
+colors = get_contour_colors(image)
+for color in colors:
+	if color in prius_colors:
+		return True
+return False
 
-	def has_prius_contour_from_array(arr):
-		colors = get_contour_colors_from_array(arr)
-		for color in colors:
-			if color in prius_colors:
-				return True
-		return False
+def has_prius_contour_from_array(arr):
+colors = get_contour_colors_from_array(arr)
+for color in colors:
+	if color in prius_colors:
+		return True
+return False
 
-	def detect_color(image_src):
-		return detect_color_from_array(cv2.imread(image_src))
+def detect_color(image_src):
+return detect_color_from_array(cv2.imread(image_src))
 
-	def detect_color_from_array(image):
-		# load the image and resize it to a smaller factor so that
-		# the shapes can be approximated better
-		# image = cv2.imread(os.path.join(path,image))
-		try:
-			resized = imutils.resize(image, width=300)
-			ratio = image.shape[0] / float(resized.shape[0])
-			# blur the resized image slightly, then convert it to both
-			# grayscale and the L*a*b* color spaces
-			blurred = cv2.GaussianBlur(resized, (5, 5), 0)
-			gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
-			lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
-			thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
+def detect_color_from_array(image):
+# load the image and resize it to a smaller factor so that
+# the shapes can be approximated better
+# image = cv2.imread(os.path.join(path,image))
+try:
+	resized = imutils.resize(image, width=300)
+	ratio = image.shape[0] / float(resized.shape[0])
+	# blur the resized image slightly, then convert it to both
+	# grayscale and the L*a*b* color spaces
+	blurred = cv2.GaussianBlur(resized, (5, 5), 0)
+	gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
+	lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
+	thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
 
-			# find contours in the thresholded image
-			cnts = find_significant_contour(thresh.copy())
+	# find contours in the thresholded image
+	cnts = find_significant_contour(thresh.copy())
 
-			cl = ColorLabeler()
-			color = cl.label(lab, cnts)
-			return color
-		except Exception as e:
-			print("While detecting color: " + str(e))
+	cl = ColorLabeler()
+	color = cl.label(lab, cnts)
+	return color
+except Exception as e:
+	print("While detecting color: " + str(e))
 
-		def has_prius_color(image):
-			detected_color = detect_color(image)
-			if detected_color in prius_colors:
-				return True
-			return False
+def has_prius_color(image):
+	detected_color = detect_color(image)
+	if detected_color in prius_colors:
+		return True
+	return False
 
-		def has_prius_color_from_array(image):
-			detected_color = detect_color_from_array(image)
-			if detected_color in prius_colors:
-				return True
-			return False
+def has_prius_color_from_array(image):
+	detected_color = detect_color_from_array(image)
+	if detected_color in prius_colors:
+		return True
+	return False
 
-		def load_counts():
-			with open("color_counts.json", "r") as read_file:
-				return json.load(read_file)
+def load_counts():
+	with open("color_counts.json", "r") as read_file:
+		return json.load(read_file)
 
-		def detect_colors():
-			results_dict = load_counts()
-			results = {}
-			if args['type'] == "prius":
-				results = results_dict['prius']
+def detect_colors():
+	results_dict = load_counts()
+	results = {}
+	if args['type'] == "prius":
+		results = results_dict['prius']
+	else:
+		results = results_dict['vehicle']
+
+	for image in arr:
+		color = detect_color(os.path.join(path, image), image)
+		if color is not None:
+			if color in results:
+				count = results[color]
+				results[color] = count + 1
 			else:
-				results = results_dict['vehicle']
+				results[color] = 1
 
-			for image in arr:
-				color = detect_color(os.path.join(path, image), image)
-				if color is not None:
-					if color in results:
-						count = results[color]
-						results[color] = count + 1
-					else:
-						results[color] = 1
+	# print(str(results_dict))
+	# for key, value in results_dict['prius']:
+	#	print("Color: " str(key) "  Count: " str(value))
 
-			# print(str(results_dict))
-			# for key, value in results_dict['prius']:
-			#	print("Color: " str(key) "  Count: " str(value))
-
-		# write_json(results_dict)
+# write_json(results_dict)
