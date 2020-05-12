@@ -128,19 +128,18 @@ def watch_camera(cam):
 
 			#print("Detection Time: " + str(start2 - start1))
 
+			image_arr = np.array(decoded.getdata())
+
+
 			for car in result:
 				top, left, bottom, right = car["box"]
 				top = max(0, np.floor(top + 0.5).astype('int32'))
 				left = max(0, np.floor(left + 0.5).astype('int32'))
 				bottom = min(decoded.size[1], np.floor(bottom + 0.5).astype('int32'))
 				right = min(decoded.size[0], np.floor(right + 0.5).astype('int32'))
-
-				decoded = decoded.crop((left,top,right,bottom))
-
+				img = img_arr[left:top,right:bottom]
 				#start2 = time.time()
-				boxed_detect = letterbox_image(decoded, tuple(reversed(model_image_size)))
-				image_detect = np.array(boxed_detect, dtype='float32')
-				predictions, probabilities = prediction.predictImage(image_detect,
+				predictions, probabilities = prediction.predictImage(img,
 				                                                     input_type="array",
 				                                                     result_count=2)
 				#start3 = time.time()
@@ -182,7 +181,7 @@ def watch_camera(cam):
 
 							cv2.imwrite(args['output'] + frame_detected_file, img)
 	except Exception as e:
-		print(e)
+		#print(e)
 		pass
 
 if __name__ == '__main__':
