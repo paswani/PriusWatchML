@@ -72,7 +72,7 @@ custom_objects = detector.CustomObjects(car=True)
 prediction = CustomImagePrediction()
 prediction.setModelTypeAsResNet()
 # self.prediction.setModelPath(model_path + "model_ex-012_acc-0.988819.h5")
-prediction.setModelPath(args['models'] + "model_ex-043_acc-0.996787.h5")
+prediction.setModelPath(args['models'] + "model_ex-027_acc-0.995257.h5")
 prediction.setJsonPath(args['models'] + "model_class.json")
 prediction.loadModel(num_objects=2, prediction_speed=args["predictspeed"])
 
