@@ -13,44 +13,6 @@ from imutils import contours
 
 
 prius_list = [
-	"juniper [2]",  # 74918E
-	"gateway",  # 5E7175
-	"juniper [2]",  # 6D9292
-	"desaturated cyan",  # 669999
-	"steel teal",  # 5F8A8B
-	"cadet [2]",  # 5F9EA0
-	"wishlist",  # 659295
-	"gothic [2]",  # 698890
-	"streetwise",  # 4F6971
-	"blue bayoux [2]",  # 62777E
-	"cadet [2]",  # 536872
-	"dark electric blue",  # 536878
-	"wavelength",  # 3C6886
-	"metallic blue",  # 4F738E
-	"grayish cerulean",  # 7D9EA8
-	"grayish cyan",  # 7DA8A8
-	"moderate cerulean",  # 4A91A8
-	"moderate azure",  # 4A79A8
-	"PMS549",  # 5E99AA
-	"horizon [2]",  # 648894
-	"hoki [2]",  # 647D86
-	"PMS550",  # 87AFBF
-	"gothic [2]",  # 6D92A1
-	"greyblue",  # 77A1B5
-	"bluegrey",  # 85A3B2
-	"moonstone blue",  # 73A9C2
-	"pewter blue",  # 8BA8B7
-	"PMS5415",  # 607C8C
-	"blue moon",  # 7296AB
-	"tsunami",  # 6B8393
-	"hemisphere",  # 4E93BA
-	"moderate cornflower blue",  # 4A85A8
-	"rackley",  # 5D8AA8
-	"air superiority blue",  # 72A0C1
-	"moby",  # 8EB2BE
-	"optimist",  # 2B688D
-	"venice blue [2]",  # 2C5778
-	"greyish blue",  # 5E819D
 	"surfie green [2]",  ##0C7A79
 	"ming [2]",  ##407577
 	"mosque [2]",  ##036A6E
@@ -907,7 +869,7 @@ def detect_color_from_array(image):
 
 		for c in cnts:
 			color = cl.label(lab, c)
-			print("Color: " + color)
+			#print("Color: " + color)
 			contours.append(color)
 
 		return contours
