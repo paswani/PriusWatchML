@@ -13,8 +13,6 @@ from yolo4 import Yolo4
 from imageai.Prediction.Custom import CustomImagePrediction
 from prius_color import has_prius_color_from_array
 from io import BytesIO
-from yolo4_model.utils import letterbox_image
-
 
 
 import warnings
@@ -122,11 +120,9 @@ def watch_camera(cam):
 			decoded = Image.open(BytesIO(bytes_io))
 
 			#start1 = time.time()
-		
-			boxed_image = letterbox_image(decoded, tuple(reversed(model_image_size)))
-			image_data = np.array(boxed_image, dtype='float32')
 
-			result = yolo4_model.detect_image(image_data, model_image_size=model_image_size)
+
+			result = yolo4_model.detect_image(decoded, model_image_size=model_image_size)
 
 			#start2 = time.time()
 
