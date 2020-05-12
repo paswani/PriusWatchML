@@ -13,10 +13,16 @@ import requests
 from PIL import Image
 
 from PriusImageCache import ImageDeduplication
-from imageai.Detection import ObjectDetection
+from yolo4 import Yolo4
 from imageai.Prediction.Custom import CustomImagePrediction
 from prius_color import has_prius_color_from_array
 from prius_color import has_prius_contour_from_array
+
+import colorsys
+from keras import backend as K
+from keras.models import load_model
+from keras.layers import Input
+
 
 import warnings
 warnings.filterwarnings('ignore', category=DeprecationWarning)
@@ -29,8 +35,6 @@ from tensorflow.python.util import deprecation
 deprecation._PRINT_DEPRECATION_WARNINGS = False
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 deprecation._PER_MODULE_WARNING_LIMIT = 0
-
-
 
 cams = []
 
@@ -49,15 +53,13 @@ ap.add_argument("-o", "--output", default='./',
                 help='Output Path')
 ap.add_argument("-a", "--accuracy", default=50,
                 help="predict accuracy")
-ap.add_argument("-y", "--detectspeed", default='normal',
-                help="detection speed")
 ap.add_argument("-z", "--predictspeed", default='normal',
                 help="prediction speed")
 ap.add_argument("-n", "--name", default='predictor1',
                 help="name")
 ap.add_argument("-m", "--models", default='./',
                 help='model path')
-ap.add_argument("-q", "--model", default='model_ex-011_acc-0.869792.h5',
+ap.add_argument("-q", "--model", default='model_ex-006_acc-0.994420.h5',
                 help='model')
 
 args = vars(ap.parse_args())
@@ -65,11 +67,14 @@ args = vars(ap.parse_args())
 if os.path.isdir(args['output']) is False:
 	os.mkdir(args['output'])
 
-detector = ObjectDetection()
-detector.setModelTypeAsYOLOv3()
-detector.setModelPath(args['models'] + "yolo.h5")
-detector.loadModel(detection_speed=args["detectspeed"])
-custom_objects = detector.CustomObjects(car=True)
+model_path = args['models'] + 'yolo4_weight.h5'
+anchors_path = args['models'] + 'yolo4_anchors.txt'
+classes_path = args['models'] + 'coco_classes.txt'
+
+score = 0.5
+iou = 0.5
+model_image_size = (608, 608)
+yolo4_model = Yolo4(score, iou, anchors_path, classes_path, model_path)
 
 prediction = CustomImagePrediction()
 prediction.setModelTypeAsResNet()
@@ -123,18 +128,14 @@ def watch_camera(cam):
 			decoded = cv2.imdecode(np.frombuffer(img_data, np.uint8), -1)
 
 			#start1 = time.time()
-			result = detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
-			                                               input_type="array",
-			                                               extract_detected_objects=True,
-			                                               input_image=decoded,
-			                                               output_type="array",
-			                                               minimum_percentage_probability=50)
+			result = yolo4_model.detect_image(decoded, model_image_size=model_image_size)
+
 			#start2 = time.time()
 
 			#print("Detection Time: " + str(start2 - start1))
 
-			for arr in result[1]:
-				(x1, y1, x2, y2) = arr["box_points"]
+			for car in result:
+				(x1, y1, x2, y2) = car["box"]
 				img = decoded[y1:y2, x1:x2]
 
 				#start2 = time.time()
