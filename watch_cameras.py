@@ -135,8 +135,8 @@ def watch_camera(cam):
 				bottom = min(decoded.size[1], np.floor(bottom + 0.5).astype('int32'))
 				right = min(decoded.size[0], np.floor(right + 0.5).astype('int32'))
 
-				img = decoded.crop((left,top,right,bottom))
-
+				decoded = decoded.crop((left,top,right,bottom))
+				img = np.array(decoded, dtype='float32')
 				#start2 = time.time()
 				predictions, probabilities = prediction.predictImage(img,
 				                                                     input_type="array",
