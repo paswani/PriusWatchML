@@ -179,6 +179,7 @@ def watch_camera(cam):
 							cv2.imwrite(args['output'] + frame_detected_file, img)
 	except Exception as e:
 		#print(e)
+		pass
 
 
 
