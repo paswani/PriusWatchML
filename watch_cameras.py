@@ -13,7 +13,7 @@ from yolo4 import Yolo4
 from imageai.Prediction.Custom import CustomImagePrediction
 from prius_color import has_prius_color_from_array
 from io import BytesIO
-
+from yolo4_model.utils import letterbox_image
 
 import warnings
 warnings.filterwarnings('ignore', category=DeprecationWarning)
