@@ -57,6 +57,8 @@ ap.add_argument("-n", "--name", default='predictor1',
                 help="name")
 ap.add_argument("-m", "--models", default='./',
                 help='model path')
+ap.add_argument("-q", "--model", default='model_ex-011_acc-0.869792.h5',
+                help='model')
 
 args = vars(ap.parse_args())
 
@@ -72,7 +74,7 @@ custom_objects = detector.CustomObjects(car=True)
 prediction = CustomImagePrediction()
 prediction.setModelTypeAsResNet()
 # self.prediction.setModelPath(model_path + "model_ex-012_acc-0.988819.h5")
-prediction.setModelPath(args['models'] + "model_ex-027_acc-0.995257.h5")
+prediction.setModelPath(args['models'] + args['model'])
 prediction.setJsonPath(args['models'] + "model_class.json")
 prediction.loadModel(num_objects=2, prediction_speed=args["predictspeed"])
 
