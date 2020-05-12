@@ -1,11 +1,8 @@
 import argparse
 import json
 import os
-import queue
-import re
-import threading
-import time
 
+import time
 import PriusImageCache
 import cv2
 import numpy as np
@@ -15,13 +12,7 @@ from PriusImageCache import ImageDeduplication
 from yolo4 import Yolo4
 from imageai.Prediction.Custom import CustomImagePrediction
 from prius_color import has_prius_color_from_array
-from prius_color import has_prius_contour_from_array
 from io import BytesIO
-import colorsys
-from keras import backend as K
-from keras.models import load_model
-from keras.layers import Input
-import matplotlib.pyplot as plt
 
 
 
@@ -29,7 +20,7 @@ import warnings
 warnings.filterwarnings('ignore', category=DeprecationWarning)
 warnings.filterwarnings('ignore', category=FutureWarning)
 
-import os
+
 import tensorflow as tf
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.python.util import deprecation
@@ -129,13 +120,13 @@ def watch_camera(cam):
 			bytes_io = bytearray(img_data)
 			decoded = Image.open(BytesIO(bytes_io))
 
-			start1 = time.time()
+			#start1 = time.time()
 
 			result = yolo4_model.detect_image(decoded, model_image_size=model_image_size)
 
-			start2 = time.time()
+			#start2 = time.time()
 
-			print("Detection Time: " + str(start2 - start1))
+			#print("Detection Time: " + str(start2 - start1))
 
 			for car in result:
 				top, left, bottom, right = car["box"]
@@ -143,16 +134,16 @@ def watch_camera(cam):
 				left = max(0, np.floor(left + 0.5).astype('int32'))
 				bottom = min(decoded.size[1], np.floor(bottom + 0.5).astype('int32'))
 				right = min(decoded.size[0], np.floor(right + 0.5).astype('int32'))
-				print(str(car))
+
 				img = decoded.crop((left,top,right,bottom))
 
-				start2 = time.time()
+				#start2 = time.time()
 				predictions, probabilities = prediction.predictImage(img,
 				                                                     input_type="array",
 				                                                     result_count=2)
-				start3 = time.time()
+				#start3 = time.time()
 
-				print("Prediction Time: " + str(start3 - start2))
+				#print("Prediction Time: " + str(start3 - start2))
 				for eachPrediction, eachProbability in zip(predictions, probabilities):
 					if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
 						#colorStart = time.time()
@@ -190,8 +181,7 @@ def watch_camera(cam):
 							cv2.imwrite(args['output'] + frame_detected_file, img)
 	except Exception as e:
 		print(e)
-
-
+		pass
 
 if __name__ == '__main__':
 	print("Loading Seattle Cams")
@@ -201,9 +191,3 @@ if __name__ == '__main__':
 	while True:
 		for cam in cams:
 			watch_camera(cam)
-# q.put(cam)
-
-# pathFolder = args['path']
-
-# tl.start()
-# start_watching()
