@@ -17,15 +17,32 @@ from imageai.Detection import ObjectDetection
 from imageai.Prediction.Custom import CustomImagePrediction
 from prius_color import has_prius_color_from_array
 from prius_color import has_prius_contour_from_array
-from timeloop import Timeloop
 
-tl = Timeloop()
+import warnings
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+warnings.filterwarnings('ignore', category=FutureWarning)
+
+import os
+import tensorflow as tf
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+from tensorflow.python.util import deprecation
+deprecation._PRINT_DEPRECATION_WARNINGS = False
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+
+try:
+    from tensorflow.python.util import module_wrapper as deprecation
+except ImportError:
+    from tensorflow.python.util import deprecation_wrapper as deprecation
+deprecation._PER_MODULE_WARNING_LIMIT = 0
+
+
+
 cams = []
 
 cam_threads = []
 
 dedup = ImageDeduplication()
-q = queue.Queue()
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-t", "--timer", required=False,
                 help="path to input image")
@@ -104,40 +121,40 @@ def watch_camera(cam):
 		img_data = requests.get(cam['url']).content
 
 		if dedup.is_image_duplicate(img_data, cam['id']):
-			print(frame_file + " is a duplicate image.  Removing.")
+			#print(frame_file + " is a duplicate image.  Removing.")
 		else:
 			# Update hash
 			dedup.put_hash(img_data, cam['id'])
 			decoded = cv2.imdecode(np.frombuffer(img_data, np.uint8), -1)
 
-			start1 = time.time()
+			#start1 = time.time()
 			result = detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
 			                                               input_type="array",
 			                                               extract_detected_objects=True,
 			                                               input_image=decoded,
 			                                               output_type="array",
 			                                               minimum_percentage_probability=50)
-			start2 = time.time()
+			#start2 = time.time()
 
-			print("Detection Time: " + str(start2 - start1))
+			#print("Detection Time: " + str(start2 - start1))
 
 			for arr in result[1]:
 				(x1, y1, x2, y2) = arr["box_points"]
 				img = decoded[y1:y2, x1:x2]
 
-				start2 = time.time()
+				#start2 = time.time()
 				predictions, probabilities = prediction.predictImage(img,
 				                                                     input_type="array",
 				                                                     result_count=2)
-				start3 = time.time()
+				#start3 = time.time()
 
-				print("Prediction Time: " + str(start3 - start2))
+				#print("Prediction Time: " + str(start3 - start2))
 				for eachPrediction, eachProbability in zip(predictions, probabilities):
 					if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
-						colorStart = time.time()
+						#colorStart = time.time()
 						detected_color = has_prius_color_from_array(img)
-						colorEnd = time.time()
-						print("has_color Time: " + str(colorEnd - colorStart))
+						#colorEnd = time.time()
+						#print("has_color Time: " + str(colorEnd - colorStart))
 
 						if detected_color is not None:
 							success = {
@@ -170,12 +187,6 @@ def watch_camera(cam):
 	except Exception as e:
 		print(e)
 
-
-@tl.job(interval=timedelta(seconds=int(args["timer"])))
-def watch_cameras_timer():
-	print("Cameras job current time : {}".format(time.ctime()))
-	for cam in cams:
-		q.put(cam)
 
 
 def start_watching():

@@ -87,11 +87,11 @@ class ImageDeduplication(Deduplication):
 		row, col = dhash.dhash_row_col(imageFile)
 		image_hash = dhash.format_hex(row, col)
 		meta = dict(timestamp=time.localtime(), image_hash=image_hash)
-		print("Putting hash " + str(image_hash) + " for cam " + str(cam_id) + " in cache.")
+		#print("Putting hash " + str(image_hash) + " for cam " + str(cam_id) + " in cache.")
 		self.cache[cam_id] = meta
 
 	def is_image_duplicate(self, src, cam_id=''):
-		print("Checking Duplicate: " + str(cam_id))
+		#print("Checking Duplicate: " + str(cam_id))
 
 		if cam_id not in self.cache:
 			return False
