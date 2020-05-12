@@ -122,6 +122,7 @@ def watch_camera(cam):
 			decoded = Image.open(BytesIO(bytes_io))
 
 			#start1 = time.time()
+		
 			boxed_image = letterbox_image(decoded, tuple(reversed(model_image_size)))
 			image_data = np.array(boxed_image, dtype='float32')
 

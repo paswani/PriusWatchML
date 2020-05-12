@@ -70,7 +70,7 @@ class Yolo4(object):
     def close_session(self):
         self.sess.close()
 
-    def detect_image(self, image, model_image_size=(608, 608)):
+    def detect_image(self, image_data, model_image_size=(608, 608)):
 
         image_data /= 255.
         image_data = np.expand_dims(image_data, 0)  # Add batch dimension.
