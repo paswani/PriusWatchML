@@ -138,7 +138,7 @@ def watch_camera(cam):
 				right = min(decoded.size[0], np.floor(right + 0.5).astype('int32'))
 
 				img = img_src[top:bottom, left:right]
-	
+
 				#start2 = time.time()
 				predictions, probabilities = prediction.predictImage(img,
 				                                                     input_type="array",
@@ -147,8 +147,6 @@ def watch_camera(cam):
 
 				#print("Prediction Time: " + str(start3 - start2))
 				for eachPrediction, eachProbability in zip(predictions, probabilities):
-
-					print(str(eachPrediction))
 					if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
 						colorStart = time.time()
 						detected_color = has_prius_color_from_array(img)
