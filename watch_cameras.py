@@ -5,13 +5,13 @@ import queue
 import re
 import threading
 import time
-from datetime import timedelta
 
 import PriusImageCache
 import cv2
 import numpy as np
 import requests
 from PIL import Image
+
 from PriusImageCache import ImageDeduplication
 from imageai.Detection import ObjectDetection
 from imageai.Prediction.Custom import CustomImagePrediction
@@ -28,11 +28,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.python.util import deprecation
 deprecation._PRINT_DEPRECATION_WARNINGS = False
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-
-try:
-    from tensorflow.python.util import module_wrapper as deprecation
-except ImportError:
-    from tensorflow.python.util import deprecation_wrapper as deprecation
 deprecation._PER_MODULE_WARNING_LIMIT = 0
 
 
@@ -120,9 +115,7 @@ def watch_camera(cam):
 
 		img_data = requests.get(cam['url']).content
 
-		if dedup.is_image_duplicate(img_data, cam['id']):
-			#print(frame_file + " is a duplicate image.  Removing.")
-		else:
+		if dedup.is_image_duplicate(img_data, cam['id']) is not True:
 			# Update hash
 			dedup.put_hash(img_data, cam['id'])
 			decoded = cv2.imdecode(np.frombuffer(img_data, np.uint8), -1)
