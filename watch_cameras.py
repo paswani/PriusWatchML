@@ -118,6 +118,7 @@ def watch_camera(cam):
 			dedup.put_hash(img_data, cam['id'])
 			bytes_io = bytearray(img_data)
 			decoded = Image.open(BytesIO(bytes_io))
+			img_src = cv2.imdecode(np.frombuffer(img_data, np.uint8), -1)
 
 			#start1 = time.time()
 
@@ -128,8 +129,6 @@ def watch_camera(cam):
 
 			#print("Detection Time: " + str(start2 - start1))
 
-			image_arr = np.array(decoded.getdata())
-
 
 			for car in result:
 				top, left, bottom, right = car["box"]
@@ -137,7 +136,9 @@ def watch_camera(cam):
 				left = max(0, np.floor(left + 0.5).astype('int32'))
 				bottom = min(decoded.size[1], np.floor(bottom + 0.5).astype('int32'))
 				right = min(decoded.size[0], np.floor(right + 0.5).astype('int32'))
-				img = img_arr[left:top,right:bottom]
+
+				img = img_src[top:bottom, left:right]
+	
 				#start2 = time.time()
 				predictions, probabilities = prediction.predictImage(img,
 				                                                     input_type="array",
@@ -146,10 +147,12 @@ def watch_camera(cam):
 
 				#print("Prediction Time: " + str(start3 - start2))
 				for eachPrediction, eachProbability in zip(predictions, probabilities):
+
+					print(str(eachPrediction))
 					if "prius" in eachPrediction and int(eachProbability) > int(args['accuracy']):
-						#colorStart = time.time()
+						colorStart = time.time()
 						detected_color = has_prius_color_from_array(img)
-						#colorEnd = time.time()
+						colorEnd = time.time()
 						#print("has_color Time: " + str(colorEnd - colorStart))
 
 						if detected_color is not None:
@@ -181,7 +184,7 @@ def watch_camera(cam):
 
 							cv2.imwrite(args['output'] + frame_detected_file, img)
 	except Exception as e:
-		#print(e)
+		print(e)
 		pass
 
 if __name__ == '__main__':
