@@ -294,7 +294,7 @@ prius_full = [
 	"deep turquoise [2]",  ##017374
 	"atoll [2]",  ##2B797A
 	"elm [2]",  ##1C7C7D
-	"mako [2]",  ##505555
+	#"mako [2]",  ##505555
 	"dark cyanish grey",  ##535959
 	"PMS445",  ##565959
 	"dark aqua",  ##05696B
@@ -312,7 +312,7 @@ prius_full = [
 	"PMS5473",  ##26686D
 	"deep aqua",  ##08787F
 	"william [2]",  ##3A686C
-	"river bed [2]",  ##556061
+	#"river bed [2]",  ##556061
 	"PMS3155",  ##006D75
 	"espirit",  ##354E51
 	"beatnik",  ##1F4F54
@@ -321,7 +321,7 @@ prius_full = [
 	"tax break [2]",  ##496569
 	"dark arctic blue",  ##275359
 	"casal [2]",  ##2F6168
-	"PMS432",  ##444F51
+	#"PMS432",  ##444F51
 	"petrol",  ##005F6A
 	"PMS315",  ##006B77
 	"blue lagoon [3]",  ##017987
@@ -336,7 +336,7 @@ prius_full = [
 	"boomtown",  ##346672
 	"dark grayish cerulean",  ##425459
 	"kitsch",  ##006C7F
-	"pale sky [2]",  ##636D70
+	#"pale sky [2]",  ##636D70
 	"breaker bay [2]",  ##5DA19F
 	"destiny",  ##889E9D
 	"cyan [5]",  ##008B8B
@@ -357,7 +357,7 @@ prius_full = [
 	"grayish cyan",  ##7DA8A8
 	"trojan",  ##757878
 	"PMS321",  ##008789
-	"sirocco [2]",  ##718080
+	#"sirocco [2]",  ##718080
 	"azure [8]",  ##838B8B
 	"light cyan [6]",  ##7A8B8B
 	"submarine [2]",  ##8C9C9C
@@ -376,7 +376,7 @@ prius_full = [
 	"neptune [2]",  ##77A8AB
 	"fountain blue [2]",  ##65ADB2
 	"paradiso [2]",  ##488084
-	"bounty",  ##919FA0
+	#"bounty",  ##919FA0
 	"PMS3145",  ##00848E
 	"ziggurat [2]",  ##81A6AA
 	"half smalt blue",  ##5E7C80
@@ -393,8 +393,8 @@ prius_full = [
 	"cerulean [5]",  ##05B8CC
 	"seeker",  ##0092A5
 	"wot eva",  ##4495A4
-	"cool grey [2]",  ##95A3A6
-	"dusted blue",  ##929FA2
+	#"cool grey [2]",  ##95A3A6
+	#"dusted blue",  ##929FA2
 	"powder blue [4]",  ##929FA2
 	"pelorous [2]",  ##3EABBF
 	"strong arctic blue",  ##0093A8
@@ -500,13 +500,13 @@ prius_full = [
 	"PMS313",  ##0099B5
 	"PMS549",  ##5E99AA
 	"awash",  ##739CA9
-	"triple surrender",  ##999C9D
+	#"triple surrender",  ##999C9D
 	"PMS638",  ##00B5D6
 	"PMS314",  ##00829B
 	"blue [12]",  ##0093AF
 	"smalt blue [2]",  ##51808F
 	"tax break [2]",  ##51808F
-	"regent grey [2]",  ##798488
+	#"regent grey [2]",  ##798488
 	"horizon [2]",  ##648894
 	"pacific blue [2]",  ##1CA9C9
 	"hoki [2]",  ##647D86
@@ -514,7 +514,7 @@ prius_full = [
 	"blue green [3]",  ##199EBD
 	"aquarius",  ##43A8C5
 	"PMS801",  ##00AACC
-	"half regent grey",  ##939DA1
+	#"half regent grey",  ##939DA1
 	"ball blue",  ##21ABCD
 	"moderate cerulean",  ##4A91A8
 	"bondi blue [3]",  ##0095B6
@@ -522,14 +522,14 @@ prius_full = [
 	"PMS550",  ##87AFBF
 	"steel grey [3]",  ##6F828A
 	"gothic [2]",  ##6D92A1
-	"clouded blue",  ##899296
+	#"clouded blue",  ##899296
 	"endorphin",  ##4190AD
-	"amber grey",  ##929698
+	#"amber grey",  ##929698
 	"bright cerulean",  ##1DACD6
 	"cerulean [5]",  ##1DACD6
-	"silver aluminium",  ##9EA0A1
+	#"silver aluminium",  ##9EA0A1
 	"so cool",  ##9EA0A1
-	"double surrender",  ##A8AAAB
+	#"double surrender",  ##A8AAAB
 	"dirty blue",  ##3F829D
 	"PMS640",  ##008CB2
 	"boston blue [2]",  ##438EAC
@@ -539,7 +539,7 @@ prius_full = [
 	"PMS801 2X",  ##0089AF
 	"abacus",  ##768993
 	"bluish grey [2]",  ##748B97
-	"instinct",  ##8C979D
+	#"instinct",  ##8C979D
 	"peacock",  ##33A1C9
 	"moonstone blue",  ##73A9C2
 	"pewter blue",  ##8BA8B7
@@ -554,10 +554,10 @@ prius_full = [
 	"waterfront",  ##3E7F9D
 	"light sky blue [6]",  ##607B8B
 	"lynch [2]",  ##697D89
-	"aluminium [3]",  ##848789
+	#"aluminium [3]",  ##848789
 	"blue moon",  ##7296AB
-	"rolling stone [2]",  ##747D83
-	"oslo grey [2]",  ##878D91
+	#"rolling stone [2]",  ##747D83
+	#"oslo grey [2]",  ##878D91
 	"deep sky blue [5]",  ##009ACD
 	"PMS2995",  ##00A5DB
 	"vivid cerulean [2]",  ##00AEE7
@@ -581,24 +581,24 @@ prius_full = [
 	"rackley",  ##5D8AA8
 	"sky blue [9]",  ##3299CC
 	"air superiority blue",  ##72A0C1
-	"el nino",  ##92A0AC
+	#"el nino",  ##92A0AC
 	"brilliant cornflower blue",  ##51AFE7
-	"forecast",  ##A2AAB1
+	#"forecast",  ##A2AAB1
 	"grey blue",  ##6B8BA4
 	"streetwise",  ##4F6971
 	"deep space sparkle",  ##4A646C
 	"ocean",  ##017B92
-	"infinity",  ##6A7376
-	"gunmetal [4]",  ##536267
+	#"infinity",  ##6A7376
+	#"gunmetal [4]",  ##536267
 	"allports [2]",  ##1F6A7D
 	"blue bayoux [2]",  ##62777E
 	"PMS633",  ##007F99
 	"dark cerulean [2]",  ##274D59
-	"abbey [2]",  ##495154
+	#"abbey [2]",  ##495154
 	"teal blue [4]",  ##367588
 	"norwester",  ##48798A
-	"trout [2]",  ##4C5356
-	"PMS431",  ##666D70
+	#"trout [2]",  ##4C5356
+	#"PMS431",  ##666D70
 	"bismark [2]",  ##486C7A
 	"marathon",  ##305563
 	"pickled bluewood [2]",  ##4F5A5F
@@ -622,9 +622,9 @@ prius_full = [
 	"dark slate [2]",  ##394851
 	"limed spruce [2]",  ##394851
 	"navigate",  ##304E5E
-	"mid grey [3]",  ##717476
+	#"mid grey [3]",  ##717476
 	"jetsetter",  ##40505A
-	"quarter foundry",  ##525557
+	#"quarter foundry",  ##525557
 	"blue sapphire",  ##126180
 	"deep sky blue [5]",  ##00688B
 	"slate grey [6]",  ##59656D
@@ -636,7 +636,7 @@ prius_full = [
 	"ivanhoe",  ##3B4C57
 	"chathams blue [2]",  ##2C5971
 	"slate [2]",  ##516572
-	"nevada [2]",  ##646E75
+	#"nevada [2]",  ##646E75
 	"PMS307",  ##007AA5
 	"PMS641",  ##007AA5
 	"cg blue",  ##007AA5
@@ -661,9 +661,9 @@ prius_full = [
 	"neon blue [2]",  ##04D9FF
 	"french pass [2]",  ##A4D2E0
 	"pale light grayish cerulean",  ##B8DCE7
-	"gull grey [2]",  ##A4ADB0
+	#"gull grey [2]",  ##A4ADB0
 	"eskimo",  ##A2B4BA
-	"triple athens grey",  ##C2C5C6
+	#"triple athens grey",  ##C2C5C6
 	"moby",  ##8EB2BE
 	"belgion",  ##ADD8E6
 	"blue light",  ##ADD8E6
@@ -691,7 +691,7 @@ prius_full = [
 	"sky blue [9]",  ##87CEEB
 	"bright sky blue",  ##02CCFE
 	"vivid sky blue",  ##00CCFF
-	"silver sand [2]",  ##BFC1C2
+	#"silver sand [2]",  ##BFC1C2
 	"half iron",  ##D5D7D8
 	"white thunder",  ##D5D7D8
 	"PMS290",  ##C4D8E2
@@ -706,7 +706,7 @@ prius_full = [
 	"light cornflower blue [2]",  ##93CCEA
 	"altitude",  ##BCD4E2
 	"light sky blue [6]",  ##8DB6CD
-	"metro",  ##ACAFB1
+	#"metro",  ##ACAFB1
 	"iron [2]",  ##D4D7D9
 	"hit grey [2]",  ##A1ADB5
 	"malibu [2]",  ##66B7E1
@@ -757,7 +757,7 @@ def write_json(data, filename="color_counts.json"):
 
 
 def find_significant_contour(img):
-	contours, hierarchy = cv2.findContours(
+	Image, contours, hierarchy = cv2.findContours(
 		img,
 		cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE
