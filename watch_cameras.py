@@ -132,83 +132,85 @@ def predict_camera(cam, img):
 
 def watch_camera(cam):
     #	while True:
-	try:
-    # cam = q.get()
-    # if cam is None:
-    #	break
+    try:
+        # cam = q.get()
+        # if cam is None:
+        #	break
 
-	    now = time.localtime()
-	    # frame_folder = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday) + "_" + str(
-	    #	now.tm_hour) + "-" + str(now.tm_min) + "/"
+        now = time.localtime()
+        # frame_folder = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday) + "_" + str(
+        #	now.tm_hour) + "-" + str(now.tm_min) + "/"
 
-	    frame_time = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday) + "_" + str(
-	        now.tm_hour) + "-" + str(now.tm_min) + "_" + str(now.tm_sec)
+        frame_time = str(now.tm_year) + str(now.tm_mon) + str(now.tm_mday) + "_" + str(
+            now.tm_hour) + "-" + str(now.tm_min) + "_" + str(now.tm_sec)
 
-	    frame_file = frame_time + "_" + str(cam['id']) + ".jpg"
-	    frame_match_file = frame_time + "_match_" + str(cam['id']) + ".jpg"
-	    frame_detected_file = frame_time + "_detected_" + str(cam['id']) + ".jpg"
-	    # frame_dir = args["path"] + frame_folder
-	    # if os.path.exists(frame_dir) is False:
-	    #	os.mkdir(frame_dir)
-	    img_data = []
-	    decoded = Image
-	    if "camera" in args['mode']:
-	        img_data = requests.get(cam['url']).content
-	        bytes_io = bytearray(img_data)
-	        decoded = Image.open(BytesIO(bytes_io))
-	        img_src = cv2.imdecode(np.frombuffer(img_data, np.uint8), -1)
+        frame_file = frame_time + "_" + str(cam['id']) + ".jpg"
+        frame_match_file = frame_time + "_match_" + str(cam['id']) + ".jpg"
+        frame_detected_file = frame_time + \
+            "_detected_" + str(cam['id']) + ".jpg"
+        # frame_dir = args["path"] + frame_folder
+        # if os.path.exists(frame_dir) is False:
+        #	os.mkdir(frame_dir)
+        img_data = []
+        decoded = Image
+        if "camera" in args['mode']:
+            img_data = requests.get(cam['url']).content
+            bytes_io = bytearray(img_data)
+            decoded = Image.open(BytesIO(bytes_io))
+            img_src = cv2.imdecode(np.frombuffer(img_data, np.uint8), -1)
 
-	    if "file" in args['mode']:
-	        decoded = Image.open(cam['path'] + cam['id'])
-	        img_src = cv2.imread(cam['path'] + cam['id'])
-	        img_data = bytes(str(img_src), 'utf8')
+        if "file" in args['mode']:
+            decoded = Image.open(cam['path'] + cam['id'])
+            img_src = cv2.imread(cam['path'] + cam['id'])
+            img_data = bytes(str(img_src), 'utf8')
 
-	    if dedup.is_image_duplicate(img_data, cam['id']) is not True:
-	        # Update hash
-	        if args['mode'] is "camera":
-	            dedup.put_hash(img_data, cam['id'])
+        if dedup.is_image_duplicate(img_data, cam['id']) is not True:
+            # Update hash
+            if args['mode'] is "camera":
+                dedup.put_hash(img_data, cam['id'])
 
-	        # start1 = time.time()
-	        result = yolo4_model.detect_image(
-	            decoded, model_image_size=model_image_size)
-	        # start2 = time.time()
+            # start1 = time.time()
+            result = yolo4_model.detect_image(
+                decoded, model_image_size=model_image_size)
+            # start2 = time.time()
 
-	        # print("Detection Time: " + str(start2 - start1))
-	        for car in result:
-	            top, left, bottom, right = car["box"]
-	            top = max(0, np.floor(top + 0.5).astype('int32'))
-	            left = max(0, np.floor(left + 0.5).astype('int32'))
-	            bottom = min(decoded.size[1], np.floor(
-	                bottom + 0.5).astype('int32'))
-	            right = min(decoded.size[0], np.floor(
-	                right + 0.5).astype('int32'))
+            # print("Detection Time: " + str(start2 - start1))
+            for car in result:
+                top, left, bottom, right = car["box"]
+                top = max(0, np.floor(top + 0.5).astype('int32'))
+                left = max(0, np.floor(left + 0.5).astype('int32'))
+                bottom = min(decoded.size[1], np.floor(
+                    bottom + 0.5).astype('int32'))
+                right = min(decoded.size[0], np.floor(
+                    right + 0.5).astype('int32'))
 
-	            img = img_src[top:bottom, left:right]
+                img = img_src[top:bottom, left:right]
 
-	            results = predict_camera(cam, img)
-	            count = 0
-	            for success in results:
-	                try:
-	                    r = requests.post("http://priusvision.azurewebsites.net/api/PriusTrigger",
-	                                      data=json.dumps(success))
-	                    print(
-	                        "---->  PRIUS IDENTIFIED.   Data: " + str(success))
-	                except Exception as e:
-	                    print("Saving Prius result failed:  " + str(e))
-	                    save_result(success)
+                results = predict_camera(cam, img)
+                count = 0
+                for success in results:
+                    try:
+                        r = requests.post("http://priusvision.azurewebsites.net/api/PriusTrigger",
+                                          data=json.dumps(success))
+                        print(
+                            "---->  PRIUS IDENTIFIED.   Data: " + str(success))
+                    except Exception as e:
+                        print("Saving Prius result failed:  " + str(e))
+                        save_result(success)
 
-	                if r.status_code is not 200:
-	                    print("POST Failed.  Saving manually.")
-	                    save_result(success)
+                    if r.status_code is not 200:
+                        print("POST Failed.  Saving manually.")
+                        save_result(success)
 
-	                    # with open(args['output'] + frame_match_file, 'wb') as handler:
-	                    #	handler.write(img_data)
-	                decoded.save(args['output'] +str(count) + frame_match_file)
-	                cv2.imwrite(args['output'] + str(count) + "_detected_" + frame_detected_file, img)
-	                count = count + 1
-	except Exception as e:
-	    #print(e)
-   # pass
+                        # with open(args['output'] + frame_match_file, 'wb') as handler:
+                        #	handler.write(img_data)
+                    decoded.save(args['output'] +
+                                 str(count) + frame_match_file)
+                    cv2.imwrite(args['output'] + str(count) +
+                                "_detected_" + frame_detected_file, img)
+                    count = count + 1
+    except Exception as e:
+    	pass
 
 
 if __name__ == '__main__':
@@ -221,8 +223,8 @@ if __name__ == '__main__':
                     img = cv2.imread(root + "/" + name)
                     results = predict_camera(dict(id=name, path=root), img)
                     for found in results:
-                        cv2.imwrite(args['output'] + "_detected_" + name + \
-                                str(found['probability'].astype('int32')), img)
+                        cv2.imwrite(args['output'] + "_detected_" + name +
+                                    str(int(found['probability'])), img)
                         print(str(found))
                 else:
                     if "processed" not in name and "detection" not in name and name.endswith(".jpg"):
